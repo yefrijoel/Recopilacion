@@ -1,0 +1,20 @@
+
+        .details_card
+        {
+            display: flex;
+            align-items: center;
+            margin: 150px 0px;
+        }
+        .details_card>span
+        {
+            float: left;
+            font-size: 60px;
+        }
+        
+        .details_card>div
+        {
+            float: left;
+            font-size: 20px;
+            margin-left: 20px;
+            letter-spacing: 2px
+        }
