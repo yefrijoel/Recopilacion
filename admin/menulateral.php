@@ -8,10 +8,10 @@
                     </div>
                     <div class="nav__list">
                         <a href="#" class="nav__link active">
-                            <ion-icon name="panel-outline" class="nav__icon"></ion-icon>
+                            <ion-icon name="pen-outline" class="nav__icon"></ion-icon>
                             <span class="nav__name">Mesas</span>
                         </a>
-                        <a href="#" class="nav__link">
+                        <a href="producto.php" class="nav__link">
                             <ion-icon name="restaurant-outline" class="nav__icon"></ion-icon>
                             <span class="nav__name">Menu</span>
                         </a>
@@ -24,18 +24,7 @@
                             <ion-icon name="receipt-outline" class="nav__icon"></ion-icon>
                             <span class="nav__name">Pago</span>
                         </a>
-                        <div class="nav__link collapse">
-                            <ion-icon name="-outline" class="nav__icon"></ion-icon>
-                            <span class="nav__name">Team</span>
-
-                            <ion-icon name="chevron-down-outline" class="collapse__link"></ion-icon>
-
-                            <ul class="collapse__menu">
-                                <a href="#" class="collapse__sublink">Data</a>
-                                <a href="#" class="collapse__sublink">Group</a>
-                                <a href="#" class="collapse__sublink">Members</a>
-                            </ul>
-                        </div>
+                       
                         <a href="#" class="nav__link">
                             <ion-icon name="settings-outline" class="nav__icon"></ion-icon>
                             <span class="nav__name">Settings</span>
@@ -45,7 +34,7 @@
 
                 
 
-                <a href="#" class="nav__link">
+                <a href="../index.php" class="nav__link">
                     <ion-icon name="log-out-outline" class="nav__icon"></ion-icon>
                     <span class="nav__name">Log Out</span>
                 </a>
