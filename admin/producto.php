@@ -23,7 +23,7 @@
     <h2>producto</h2>
       <div class="card card-login mx-auto mt-5">
         <div class="card-body">
-          <form id="" action="producto.php" method="post" >
+          <form id="" action="producto.php" method="post" enctype="multipart/form-data">
             <div class="form-group">
               <div class="form-label-group">
                 <input type="number" id="" name="idpro" class="form-control" placeholder="ID" required="required"  >
@@ -37,7 +37,7 @@
             </div>
             <div class="form-group">
               <div class="form-select-group">               
-                    <select name="catego" id=""  class="form-select">
+                    <select name="catego" id="" class="form-select">
                         <?php
                         require('connect.php');
                         $sql="SELECT * FROM designdb.categorias";
@@ -58,7 +58,7 @@
             </div>
             <div class="form-group">
               <div class="form-label-group">
-                    <input type="file" id="" name="image" class="form-control"  required="required" >                 
+                    <input type="file" id="imege" name="image" class="form-control"  required="required" >          
               </div>
             </div>
             <div class="form-group">
@@ -96,14 +96,28 @@ if (isset($_POST['action'])) {
     $nombre = $_POST['nombre'];
     $catego = $_POST['catego'];
     $precio = $_POST['precio'];
-    $image = $_POST['image'];
-    $decri = $_POST['decri'];
-    $sql="INSERT INTO productos values ('$idpro','$nombre','$catego','$precio'.'$image','$decri')";
-    $resutado=mysqli_query($conectar,$sql);
-    if ($resutado==1) {
-       echo "Guardar";
-    }else{
-        echo "No guardo";
+    
+    // Ruta de la carpeta donde se guardarán las imágenes
+    $target_dir = "img/";
+
+    // Nombre del archivo de la imagen
+    $target_file = $target_dir . basename($_FILES["image"]["name"]);
+
+    // Mueve el archivo cargado a la carpeta destino
+    if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
+        // La imagen se ha cargado correctamente, ahora guardamos el nombre del archivo en la base de datos
+        $image = basename($_FILES["image"]["name"]);
+
+        $decri = $_POST['decri'];
+        $sql = "INSERT INTO productos VALUES ('$idpro','$nombre','$catego','$precio','$image','$decri')";
+        $resultado = mysqli_query($conectar, $sql);
+        if ($resultado == 1) {
+            echo "Guardado correctamente";
+        } else {
+            echo "No se pudo guardar";
+        }
+    } else {
+        echo "Error al subir el archivo.";
     }
 }
 ?>
