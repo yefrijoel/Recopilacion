@@ -121,12 +121,17 @@
 	<section class="our_menus" id="menus">
 		<div class="container">
 			<h2 style="text-align: center;margin-bottom: 30px">DESCUBRE NUESTROS MENÚS</h2>
+			<?php 
+			require ('connect.php');
+			$sql="SELECT * FROM designdb.productos";
+			$tabla=mysqli_query($conectar,$sql);
+			while($fila=mysqli_fetch_array($tabla)){
+				?>
+				
+				
 			<div class="menus_tabs">
-				<div class="menus_tabs_picker">
-					
-			
+				<div class="menus_tabs_picker">								
 				</div>
-
 				<div class="menus_tab">
 					<div class="menu_item  tab_category_content" id="burgers" style=display:block><div class='row'>
 
@@ -135,217 +140,30 @@
 	                                                    
 	                                                    <div class="menu-image">
 													        <div class="image-preview">
-													            <div style="background-image: url('admin/Uploads/images/burger.jpeg');"></div>
+													            <div style="background-image: url(<?php echo $fila[4] ?>);"></div>
 													        </div>
 													    </div>
 														                                                    
 	                                                    <div class="caption">
 	                                                        <h5>
-	                                                            Beef Hamburger	                                                        </h5>
+															<?php echo $fila[2] ?>	                                                        
+															</h5>
 	                                                        <p>
-	                                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam posuere, lectus et mollis ultricies, justo arcu dignissim enim, eu eleifend lectus nulla.	                                                        </p>
-	                                                        <span class="menu_price">
-	                                                        	$3.80	                                                        </span>
-	                                                    </div>
-														<input type="submit">
+															<?php echo $fila[5] ?>	
+															 </p>
+	                                                        <span class="menu_price"><?php echo $fila[3] ?></span>
+	                                                    </div>												
 	                                                </div>
 	                                            </div>
 
-	                                        </div></div><div class="menus_categories  tab_category_content" id="desserts"><div class='row'>
-	                                            <div class="col-md-4 col-lg-3 menu-column">
-	                                                <div class="thumbnail" style="cursor:pointer">
-	                                                		                                                    <div class="menu-image">
-													        <div class="image-preview">
-													            <div style="background-image: url('admin/Uploads/images/summer-dessert-sweet-ice-cream.jpg');"></div>
-													        </div>
-													    </div>
-	                                                    <div class="caption">
-	                                                        <h5>
-	                                                            Ice Cream	                                                        </h5>
-	                                                        <p>
-	                                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam posuere, lectus et mollis ultricies, justo arcu dignissim enim, eu eleifend lectus nulla.	                                                        </p>
-	                                                        <span class="menu_price">
-	                                                        	$7.50	                                                        </span>
-	                                                    </div>
-	                                                </div>
-	                                            </div>
-
-	                                        </div></div><div class="menus_categories  tab_category_content" id="drinks"><div class='row'>
-	                                            <div class="col-md-4 col-lg-3 menu-column">
-	                                                <div class="thumbnail" style="cursor:pointer">
-	                                                		                                                    <div class="menu-image">
-													        <div class="image-preview">
-													            <div style="background-image: url('admin/Uploads/images/coffee.jpeg');"></div>
-													        </div>
-													    </div>
-	                                                    <div class="caption">
-	                                                        <h5>
-	                                                            Coffee	                                                        </h5>
-	                                                        <p>
-	                                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam posuere, lectus et mollis ultricies, justo arcu dignissim enim, eu eleifend lectus nulla.	                                                        </p>
-	                                                        <span class="menu_price">
-	                                                        	$10.00	                                                        </span>
-	                                                    </div>
-	                                                </div>
-	                                            </div>
-
-	                                        
-	                                            <div class="col-md-4 col-lg-3 menu-column">
-	                                                <div class="thumbnail" style="cursor:pointer">
-	                                                		                                                    <div class="menu-image">
-													        <div class="image-preview">
-													            <div style="background-image: url('admin/Uploads/images/76643_ice_tea.jpg');"></div>
-													        </div>
-													    </div>
-	                                                    <div class="caption">
-	                                                        <h5>
-	                                                            Ice Tea	                                                        </h5>
-	                                                        <p>
-	                                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam posuere, lectus et mollis ultricies, justo arcu dignissim enim, eu eleifend lectus nulla.	                                                        </p>
-	                                                        <span class="menu_price">
-	                                                        	$3.20	                                                        </span>
-	                                                    </div>
-	                                                </div>
-	                                            </div>
-
-	                                        </div></div><div class="menus_categories  tab_category_content" id="pasta"><div class='row'>
-	                                            <div class="col-md-4 col-lg-3 menu-column">
-	                                                <div class="thumbnail" style="cursor:pointer">
-	                                                		                                                    <div class="menu-image">
-													        <div class="image-preview">
-													            <div style="background-image: url('admin/Uploads/images/macaroni.jpeg');"></div>
-													        </div>
-													    </div>
-	                                                    <div class="caption">
-	                                                        <h5>
-	                                                            Bucatini	                                                        </h5>
-	                                                        <p>
-	                                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam posuere, lectus et mollis ultricies, justo arcu dignissim enim, eu eleifend lectus nulla.	                                                        </p>
-	                                                        <span class="menu_price">
-	                                                        	$20.00	                                                        </span>
-	                                                    </div>
-	                                                </div>
-	                                            </div>
-
-	                                        
-	                                            <div class="col-md-4 col-lg-3 menu-column">
-	                                                <div class="thumbnail" style="cursor:pointer">
-	                                                		                                                    <div class="menu-image">
-													        <div class="image-preview">
-													            <div style="background-image: url('admin/Uploads/images/cooked_pasta.jpeg');"></div>
-													        </div>
-													    </div>
-	                                                    <div class="caption">
-	                                                        <h5>
-	                                                            Cannelloni	                                                        </h5>
-	                                                        <p>
-	                                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam posuere, lectus et mollis ultricies, justo arcu dignissim enim, eu eleifend lectus nulla.	                                                        </p>
-	                                                        <span class="menu_price">
-	                                                        	$10.00	                                                        </span>
-	                                                    </div>
-	                                                </div>
-	                                            </div>
-
-	                                        </div></div><div class="menus_categories  tab_category_content" id="pizzas"><div class='row'>
-	                                            <div class="col-md-4 col-lg-3 menu-column">
-	                                                <div class="thumbnail" style="cursor:pointer">
-	                                                		                                                    <div class="menu-image">
-													        <div class="image-preview">
-													            <div style="background-image: url('admin/Uploads/images/pizza.jpeg');"></div>
-													        </div>
-													    </div>
-	                                                    <div class="caption">
-	                                                        <h5>
-	                                                            Margherita	                                                        </h5>
-	                                                        <p>
-	                                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam posuere, lectus et mollis ultricies, justo arcu dignissim enim, eu eleifend lectus nulla.	                                                        </p>
-	                                                        <span class="menu_price">
-	                                                        	$24.00	                                                        </span>
-	                                                    </div>
-	                                                </div>
-	                                            </div>
-
-	                                        </div></div><div class="menus_categories  tab_category_content" id="salads"><div class = 'no_menus_div'>No Available Menus for this category!</div><div class='row'></div></div><div class="menus_categories  tab_category_content" id="TraditionalFood"><div class='row'>
-	                                            <div class="col-md-4 col-lg-3 menu-column">
-	                                                <div class="thumbnail" style="cursor:pointer">
-	                                                		                                                    <div class="menu-image">
-													        <div class="image-preview">
-													            <div style="background-image: url('admin/Uploads/images/88737_couscous_meat.jpg');"></div>
-													        </div>
-													    </div>
-	                                                    <div class="caption">
-	                                                        <h5>
-	                                                            Moroccan Couscous	                                                        </h5>
-	                                                        <p>
-	                                                            Moroccan couscous is a traditional dish consisting of fluffy semolina grains steamed to perfection, accompanied by a rich and aromatic stew of tender meat, vegetables, &amp; fragrant spices.	                                                        </p>
-	                                                        <span class="menu_price">
-	                                                        	$14.00	                                                        </span>
-	                                                    </div>
-	                                                </div>
-	                                            </div>
-
-	                                        
-	                                            <div class="col-md-4 col-lg-3 menu-column">
-	                                                <div class="thumbnail" style="cursor:pointer">
-	                                                		                                                    <div class="menu-image">
-													        <div class="image-preview">
-													            <div style="background-image: url('admin/Uploads/images/58146_Moroccan Chicken Tagine.jpeg');"></div>
-													        </div>
-													    </div>
-	                                                    <div class="caption">
-	                                                        <h5>
-	                                                            Moroccan Tajine	                                                        </h5>
-	                                                        <p>
-	                                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam posuere, lectus et mollis ultricies, justo arcu dignissim enim, eu eleifend lectus nulla.	                                                        </p>
-	                                                        <span class="menu_price">
-	                                                        	$20.00	                                                        </span>
-	                                                    </div>
-	                                                </div>
-	                                            </div>
-
-	                                        
-	                                            <div class="col-md-4 col-lg-3 menu-column">
-	                                                <div class="thumbnail" style="cursor:pointer">
-	                                                		                                                    <div class="menu-image">
-													        <div class="image-preview">
-													            <div style="background-image: url('admin/Uploads/images/61959_Bissara.jpg');"></div>
-													        </div>
-													    </div>
-	                                                    <div class="caption">
-	                                                        <h5>
-	                                                            Moroccan Bissara	                                                        </h5>
-	                                                        <p>
-	                                                            Bissara is a traditional Moroccan dish made from dried split fava beans (also known as broad beans) that are cooked and blended into a smooth and flavorful soup.	                                                        </p>
-	                                                        <span class="menu_price">
-	                                                        	$10.00	                                                        </span>
-	                                                    </div>
-	                                                </div>
-	                                            </div>
-
-	                                        
-	                                            <div class="col-md-4 col-lg-3 menu-column">
-	                                                <div class="thumbnail" style="cursor:pointer">
-	                                                		                                                    <div class="menu-image">
-													        <div class="image-preview">
-													            <div style="background-image: url('admin/Uploads/images/76635_57738_w1024h768c1cx256cy192.jpg');"></div>
-													        </div>
-													    </div>
-	                                                    <div class="caption">
-	                                                        <h5>
-	                                                            Couscous	                                                        </h5>
-	                                                        <p>
-	                                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam posuere, lectus et mollis ultricies, justo arcu dignissim enim, eu eleifend lectus nulla.	                                                        </p>
-	                                                        <span class="menu_price">
-	                                                        	$20.00	                                                        </span>
-	                                                    </div>
-	                                                </div>
-	                                            </div>
-
-	                                        </div></div>
-        			</div>				
-				</div>
-			</div>
-		</div>
+	                                        </div>
+										</div>                              									
+                                        </div>
+										</div> 
+										<?php
+			}
+			?>
+									</div>								
 	</section>
 
 	<!-- IMAGE GALLERY -->

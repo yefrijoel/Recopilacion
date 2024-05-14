@@ -109,7 +109,7 @@ if (isset($_POST['action'])) {
         $image = basename($_FILES["image"]["name"]);
 
         $decri = $_POST['decri'];
-        $sql = "INSERT INTO productos VALUES ('$idpro','$nombre','$catego','$precio','$image','$decri')";
+        $sql = "INSERT INTO productos VALUES ('$idpro','$nombre','$catego','$precio','admin/img/$image','$decri')";
         $resultado = mysqli_query($conectar, $sql);
         if ($resultado == 1) {
             echo "Guardado correctamente";
