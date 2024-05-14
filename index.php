@@ -121,21 +121,22 @@
 	<section class="our_menus" id="menus">
 		<div class="container">
 			<h2 style="text-align: center;margin-bottom: 30px">DESCUBRE NUESTROS MENÚS</h2>
-			<?php 
-			require ('connect.php');
-			$sql="SELECT * FROM designdb.productos";
-			$tabla=mysqli_query($conectar,$sql);
-			while($fila=mysqli_fetch_array($tabla)){
-				?>
-				
+			
 				
 			<div class="menus_tabs">
-				<div class="menus_tabs_picker">								
+				<div class="menus_tabs_picker">	
+												
 				</div>
 				<div class="menus_tab">
-					<div class="menu_item  tab_category_content" id="burgers" style=display:block><div class='row'>
-
-	                                            <div class="col-md-4 col-lg-3 menu-column">
+					<div class="menu_item  tab_category_content" id="burgers" style=display:block>
+					<div class="row py-4">
+					<?php 
+			require ('connect.php');
+			$sql="SELECT * FROM designdb.productos WHERE categorias_idcategorias = 10";
+			$tabla=mysqli_query($conectar,$sql);
+			while($fila=mysqli_fetch_array($tabla)){
+				?>				
+	                                            <div class="col-lg-3 menu-item">
 	                                                <div class="thumbnail" style="cursor:pointer">
 	                                                    
 	                                                    <div class="menu-image">
@@ -146,7 +147,7 @@
 														                                                    
 	                                                    <div class="caption">
 	                                                        <h5>
-															<?php echo $fila[2] ?>	                                                        
+															<?php echo $fila[1] ?>	                                                        
 															</h5>
 	                                                        <p>
 															<?php echo $fila[5] ?>	
@@ -155,14 +156,14 @@
 	                                                    </div>												
 	                                                </div>
 	                                            </div>
-
+												<?php
+			}
+			?>
 	                                        </div>
 										</div>                              									
                                         </div>
 										</div> 
-										<?php
-			}
-			?>
+										
 									</div>								
 	</section>
 
