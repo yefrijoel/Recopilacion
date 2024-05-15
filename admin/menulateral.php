@@ -8,7 +8,7 @@
                     </div>
                     <div class="nav__list">
                         <a href="#" class="nav__link active">
-                            <ion-icon name="pen-outline" class="nav__icon"></ion-icon>
+                            <ion-icon name="table-outline" class="nav__icon"></ion-icon>
                             <span class="nav__name">Mesas</span>
                         </a>
                         <a href="producto.php" class="nav__link">
