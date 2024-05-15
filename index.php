@@ -123,59 +123,85 @@
 			<h2 style="text-align: center;margin-bottom: 30px">DESCUBRE NUESTROS MENÚS</h2>
 			
 				
-			<div class="menus_tabs">
-				<div class="menus_tabs_picker">	
-				<?php 
+			<?php
     require('connect.php');
     $sql = "SELECT * FROM categorias";
     $tabla = mysqli_query($conectar, $sql);
 ?>
-<div class="row">
-    <?php while ($fila = mysqli_fetch_array($tabla)) { ?>
-        <div class="col">
-            <div class="tab_category" id="<?php echo $fila[0] ?>">
-                <?php echo $fila[1] ?>
-            </div>
+
+<div class="menus_tabs">
+    <div class="menus_tabs_picker">
+        <div class="row">
+            <?php while ($fila = mysqli_fetch_array($tabla)) { ?>
+                <div class="col">
+                    <div class="tab_category" id="<?php echo $fila[0] ?>">
+                        <?php echo $fila[1] ?>
+                    </div>
+                </div>
+            <?php } ?>
         </div>
-    <?php } ?>
-</div>			
-				</div>
-				<div class="menus_tab">
-					<div class="menu_item  tab_category_content" id="burgers" style=display:block>
-					<div class="row py-4">
-					<?php 
-			require ('connect.php');
-			$sql="SELECT * FROM designdb.productos WHERE categorias_idcategorias = 10";
-			$tabla=mysqli_query($conectar,$sql);
-			while($fila=mysqli_fetch_array($tabla)){
-				?>				
-	                                            <div class="col-lg-3 menu-item">
-	                                                <div class="thumbnail" style="cursor:pointer">
-	                                                    
-	                                                    <div class="menu-image">
-													        <div class="image-preview">
-													            <div style="background-image: url(<?php echo $fila[4] ?>);"></div>
-													        </div>
-													    </div>
-														                                                    
-	                                                    <div class="caption">
-	                                                        <h5>
-															<?php echo $fila[1] ?>	                                                        
-															</h5>
-	                                                        <p>
-															<?php echo $fila[5] ?>	
-															 </p>
-	                                                        <span class="menu_price"><?php echo $fila[3] ?></span>
-	                                                    </div>												
-	                                                </div>
-	                                            </div>
-												<?php
-			}
-			?>
-	                                        </div>
-										</div>                              									
-                                        </div>
-										</div> 
+    </div>
+    <div class="menus_tab">
+        <?php
+            $sql = "SELECT * FROM designdb.productos";
+            $tabla = mysqli_query($conectar, $sql);
+            $productos = mysqli_fetch_all($tabla, MYSQLI_ASSOC);
+        ?>
+        <?php foreach ($productos as $producto) { ?>
+            <div class="menu_item tab_category_content" id="<?php echo $producto['categorias_idcategorias'] ?>" style="display: none;">
+                <div class="row py-4">
+                    <div class="col-lg-3 menu-item">
+                        <div class="thumbnail" style="cursor:pointer">
+                            <div class="menu-image">
+                                <div class="image-preview" style="background-image: url(<?php echo $producto['imagen'] ?>);"></div>
+                            </div>
+                            <div class="caption">
+                                <h5><?php echo $producto['nombre'] ?></h5>
+                                <p><?php echo $producto['descripcion'] ?></p>
+                                <span class="menu_price"><?php echo $producto['precio'] ?></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php } ?>
+    </div>
+</div>
+
+<style>
+    .tab_category.selected {
+        text-decoration: underline;
+        cursor: pointer;
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var categories = document.querySelectorAll('.tab_category');
+        categories.forEach(function(category) {
+            category.addEventListener('click', function() {
+                var categoryId = this.getAttribute('id');
+                var products = document.querySelectorAll('.tab_category_content');
+                products.forEach(function(product) {
+                    if (product.getAttribute('id') === categoryId) {
+                        product.style.display = 'block';
+                    } else {
+                        product.style.display = 'none';
+                    }
+                });
+
+                // Remover clase 'selected' de todas las categorías
+                categories.forEach(function(cat) {
+                    cat.classList.remove('selected');
+                });
+                
+                // Agregar clase 'selected' a la categoría seleccionada
+                this.classList.add('selected');
+            });
+        });
+    });
+</script>
+ 
 										
 									</div>								
 	</section>
