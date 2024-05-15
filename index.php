@@ -125,7 +125,20 @@
 				
 			<div class="menus_tabs">
 				<div class="menus_tabs_picker">	
-												
+				<?php 
+    require('connect.php');
+    $sql = "SELECT * FROM categorias";
+    $tabla = mysqli_query($conectar, $sql);
+?>
+<div class="row">
+    <?php while ($fila = mysqli_fetch_array($tabla)) { ?>
+        <div class="col">
+            <div class="tab_category" id="<?php echo $fila[0] ?>">
+                <?php echo $fila[1] ?>
+            </div>
+        </div>
+    <?php } ?>
+</div>			
 				</div>
 				<div class="menus_tab">
 					<div class="menu_item  tab_category_content" id="burgers" style=display:block>
