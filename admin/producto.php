@@ -22,61 +22,107 @@
         include 'menulateral.php';
         ?>
 
+
 <div class="container">
-    <h2>producto</h2>
-      <div class="card card-login mx-auto mt-5">
+  <div class="row">
+    <div class="col-lg-6">
+      <h2>Categoria de Producto</h2>
+      <div class="card card-login mx-auto mt-4">
+        <div class="card-body">
+          <form id="" action1="producto.php" method="post">
+            <div class="form-group">
+              <div class="form-label-group">
+                <input type="number" id="" name="idcate" class="form-control" placeholder="ID" required="required">
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="form-label-group">
+                <input type="text" id="" name="nombr" class="form-control" placeholder="Nombre" required="required">
+              </div>
+            </div>
+            <div class="form-group">
+              <div id="warningbox"></div>
+              <input type="submit" class="btn btn-primary btn-block" name="action1" value="Agregar">
+            </div>
+          </form>
+        </div>
+      </div>
+      
+      <h2 class="mt-5">Producto</h2>
+      <div class="card card-login mx-auto mt-4">
         <div class="card-body">
           <form id="" action="producto.php" method="post" enctype="multipart/form-data">
             <div class="form-group">
               <div class="form-label-group">
-                <input type="number" id="" name="idpro" class="form-control" placeholder="ID" required="required"  >
-            
+                <input type="number" id="" name="idpro" class="form-control" placeholder="ID" required="required">
               </div>
             </div>
             <div class="form-group">
               <div class="form-label-group">
-                    <input type="text" id="" name="nombre" class="form-control" placeholder="Nombre" required="required" >                 
+                <input type="text" id="" name="nombre" class="form-control" placeholder="Nombre" required="required">
               </div>
             </div>
             <div class="form-group">
-              <div class="form-select-group">               
-                    <select name="catego" id="" class="form-select">
-                        <?php
-                        require('connect.php');
-                        $sql="SELECT * FROM designdb.categorias";
-                        $tabla=mysqli_query($conectar,$sql);
-                        while($fila=mysqli_fetch_array($tabla)){
-                            echo "<option value='$fila[0]'>";
-                            echo $fila[1];
-                            echo "</option>";
-                        }
-                        ?>
-                    </select>                
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="form-label-group">
-                    <input type="number" id="" name="precio" class="form-control" placeholder="Precio" required="required" >                 
+              <div class="form-select-group">
+                <select name="catego" id="" class="form-select form-control">
+                  <?php
+                  require('connect.php');
+                  $sql = "SELECT * FROM designdb.categorias";
+                  $tabla = mysqli_query($conectar, $sql);
+                  while ($fila = mysqli_fetch_array($tabla)) {
+                      echo "<option value='$fila[0]'>";
+                      echo $fila[1];
+                      echo "</option>";
+                  }
+                  ?>
+                </select>
               </div>
             </div>
             <div class="form-group">
               <div class="form-label-group">
-                    <input type="file" id="imege" name="image" class="form-control"  required="required" >          
+                <input type="number" id="" name="precio" class="form-control" placeholder="Precio" required="required">
               </div>
             </div>
             <div class="form-group">
               <div class="form-label-group">
-                    <input type="text" id="" name="decri" class="form-control" placeholder="Descripcion" required="required" >                 
+                <input type="file" id="imege" name="image" class="form-control" required="required">
               </div>
             </div>
             <div class="form-group">
-                <div id="warningbox">
-                </div>
-            <input type="submit" class="btn btn-primary btn-block" name="action" value="Agregar" />
+              <div class="form-label-group">
+                <input type="text" id="" name="decri" class="form-control" placeholder="Descripcion" required="required">
+              </div>
+            </div>
+            <div class="form-group">
+              <div id="warningbox"></div>
+              <input type="submit" class="btn btn-primary btn-block" name="action" value="Agregar">
+            </div>
           </form>
         </div>
       </div>
-      </div>
+    </div>
+
+    <div class="col-lg-6">
+  <h2>Tabla de Productos</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Categoría</th>
+        <th>Precio</th>
+        <th>Imagen</th>
+        <th>Descripción</th>
+      </tr>
+    </thead>
+    <tbody>
+     
+    </tbody>
+  </table>
+</div>
+
+  </div>
+</div>
 
         <!-- ===== IONICONS ===== -->
         <script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
@@ -96,6 +142,20 @@
     ></script>
     </body>
 </html>
+<?php
+if (isset($_POST['action1'])) {
+    require ('connect.php');
+    $idcate = $_POST['idcate'];
+    $nombr = $_POST['nombr'];
+    $sql="INSERT INTO categorias values ('$idcate','$nombr')";
+    $resutado=mysqli_query($conectar,$sql);
+    if ($resutado==1) {
+       echo "Guardar";
+    }else{
+        echo "No guardo";
+    }
+}
+?>
 <?php
 if (isset($_POST['action'])) {
     require ('connect.php');

@@ -19,7 +19,7 @@
     </head>
 
     <body>
-        <div class="container">
+<div class="container">        
 <div class="row">
     <div class="col">  
        
@@ -151,20 +151,7 @@
         ></script>
     </body>
 </html>
-<?php
-if (isset($_POST['action1'])) {
-    require ('connect.php');
-    $idcate = $_POST['idcate'];
-    $nombre = $_POST['nombre'];
-    $sql="INSERT INTO categorias values ('$idcate','$nombre')";
-    $resutado=mysqli_query($conectar,$sql);
-    if ($resutado==1) {
-       echo "Guardar";
-    }else{
-        echo "No guardo";
-    }
-}
-?>
+
 <?php
 if (isset($_POST['action2'])) {
     require ('connect.php');
