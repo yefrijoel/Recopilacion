@@ -8,6 +8,8 @@
             name="viewport"
             content="width=device-width, initial-scale=1, shrink-to-fit=no"
         />
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
         <link rel="stylesheet" href="assets/css/styles.css">
         <!-- Bootstrap CSS v5.2.1 -->
         <link
@@ -102,46 +104,81 @@
       </div>
     </div>
 
-<div class="col-lg-6">
-  <h2>Tabla de Productos</h2>
-  <table class="table">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Nombre</th>
-      <th>Categoría</th>
-      <th>Precio</th>
-      <th>Imagen</th>
-      <th>Descripción</th>
-    </tr>
-  </thead>
-  <tbody>
-    <?php
-    require('connect.php');
-    $sql = "SELECT productos.idproductos, productos.nombre, categorias.nombre AS categoria, productos.precio, productos.imagen, productos.descripcion 
-            FROM designdb.productos 
-            JOIN designdb.categorias ON productos.categorias_idcategorias = categorias.idcategorias";
-    $result = mysqli_query($conectar, $sql);
-    while ($row = mysqli_fetch_array($result)) {
-        echo "<tr>";
-        echo "<td>" . $row['idproductos'] . "</td>";
-        echo "<td>" . $row['nombre'] . "</td>";
-        echo "<td>" . $row['categoria'] . "</td>";
-        echo "<td>" . $row['precio'] . "</td>";
-        echo "<td><img src=" . $row['imagen'] . "' width='50'></td>";
-        echo "<td>" . $row['descripcion'] . "</td>";
-        echo "</tr>";
-    }
-    ?>
-  </tbody>
-</table>
+    <div class="col-lg-6">
+    <div class="container mt-3">
+  <h2>Tabla de Producto</h2>
+  <!-- Botón para abrir el modal -->
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tablaModal">
+    Abrir Tabla
+  </button>
 
+  <!-- El Modal -->
+  <div class="modal fade" id="tablaModal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+
+        <!-- Cabecera del Modal -->
+        <div class="modal-header">
+          <h4 class="modal-title">Tabla de Productos</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Cuerpo del Modal -->
+        <div class="modal-body">
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead class="thead-dark">
+                <tr>
+                  <th>ID</th>
+                  <th>Nombre</th>
+                  <th>Categoría</th>
+                  <th>Precio</th>
+                  <th>Imagen</th>
+                  <th>Descripción</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php
+                require('connect.php');
+                $sql = "SELECT productos.idproductos, productos.nombre, categorias.nombre AS categoria, productos.precio, productos.imagen, productos.descripcion 
+                        FROM designdb.productos 
+                        JOIN designdb.categorias ON productos.categorias_idcategorias = categorias.idcategorias";
+                $result = mysqli_query($conectar, $sql);
+                while ($row = mysqli_fetch_array($result)) {
+                    echo "<tr>";
+                    echo "<td>" . $row['idproductos'] . "</td>";
+                    echo "<td>" . $row['nombre'] . "</td>";
+                    echo "<td>" . $row['categoria'] . "</td>";
+                    echo "<td>" . $row['precio'] . "</td>";
+                    echo "<td><img src='" . $row['imagen'] . "' width='50'></td>";
+                    echo "<td>" . $row['descripcion'] . "</td>";
+                    echo "</tr>";
+                }
+                ?>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Pie del Modal -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+        </div>
+
+      </div>
+    </div>
   </div>
+</div>
+</div>
+
 </div>
 
         <!-- ===== IONICONS ===== -->
         <script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
         
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <!-- ===== MAIN JS ===== -->
         <script src="assets/js/main.js"></script>
         <script
