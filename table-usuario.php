@@ -73,9 +73,9 @@
               </div>
             </div>
             <div class="form-group">
-                <div id="warningbox">
-                </div>
-            <input type="submit" class="btn btn-primary btn-block" form="loginform" name="btnlogin" value="Ingresar" />
+                <input type="submit" class="btn btn-primary btn-block" form="loginform" name="btnlogin" value="Ingresar" />
+            </div>
+          
           </form>
         </div>
       </div>
