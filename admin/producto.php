@@ -21,8 +21,6 @@
         <?php
         include 'menulateral.php';
         ?>
-
-
 <div class="container">
   <div class="row">
     <div class="col-lg-4">
@@ -138,7 +136,7 @@
 
   </div>
 </div>
-
+</div>
         <!-- ===== IONICONS ===== -->
         <script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
         
