@@ -120,9 +120,7 @@
 
 	<section class="our_menus" id="menus">
 		<div class="container">
-			<h2 style="text-align: center;margin-bottom: 30px">DESCUBRE NUESTROS MENÚS</h2>
-			
-				
+			<h2 style="text-align: center;margin-bottom: 30px">DESCUBRE NUESTROS MENÚS</h2>			
 			<?php
     require('connect.php');
     $sql = "SELECT * FROM categorias";
@@ -201,7 +199,8 @@
         });
     });
 </script>
- 
+
+			 
 										
 									</div>								
 	</section>
