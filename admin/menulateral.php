@@ -7,8 +7,8 @@
                         <a href="admin.php" class="nav__logo">Administrador</a>
                     </div>
                     <div class="nav__list">
-                        <a href="#" class="nav__link active">
-                            <ion-icon name="table-outline" class="nav__icon"></ion-icon>
+                        <a href="#" class="nav__link">
+                            <ion-icon name="cube-outline" class="nav__icon"></ion-icon>
                             <span class="nav__name">Mesas</span>
                         </a>
                         <a href="producto.php" class="nav__link">
@@ -40,3 +40,5 @@
                 </a>
             </nav>
         </div>
+        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>

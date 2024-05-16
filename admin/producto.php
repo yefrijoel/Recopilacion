@@ -24,7 +24,6 @@
         include 'menulateral.php';
         ?>
 
-
 <div class="container">
   <div class="row">
     <div class="col-lg-4">
@@ -49,8 +48,8 @@
           </form>
         </div>
       </div>
-      
-      <h2 class="mt-5">Producto</h2>
+    
+      <h2 class="mt-4">Producto</h2>
       <div class="card card-login mx-auto mt-4">
         <div class="card-body">
           <form id="" action="producto.php" method="post" enctype="multipart/form-data">
@@ -135,6 +134,7 @@
                   <th>Precio</th>
                   <th>Imagen</th>
                   <th>Descripción</th>
+                  <th>Opcion</th>
                 </tr>
               </thead>
               <tbody>
@@ -150,8 +150,12 @@
                     echo "<td>" . $row['nombre'] . "</td>";
                     echo "<td>" . $row['categoria'] . "</td>";
                     echo "<td>" . $row['precio'] . "</td>";
-                    echo "<td><img src='" . $row['imagen'] . "' width='50'></td>";
+                    echo "<td><img src='...'" . $row['imagen'] . "' width='50'></td>";
                     echo "<td>" . $row['descripcion'] . "</td>";
+                    echo "<td>
+                        <a href='editar_producto.php?id=" . $row['idproductos'] . "' class='btn btn-info btn-sm'>Editar</a>
+                        <button type='button' class='btn btn-danger btn-sm' onclick='eliminarProducto(" . $row['idproductos'] . ")'>Eliminar</button>
+                        </td>";
                     echo "</tr>";
                 }
                 ?>
@@ -171,6 +175,7 @@
 </div>
 </div>
 
+</div>
 </div>
 
         <!-- ===== IONICONS ===== -->
@@ -194,6 +199,36 @@
     ></script>
     </body>
 </html>
+<?php
+// Verifica si se ha pasado un ID de producto válido
+if(isset($_GET['id']) && !empty($_GET['id'])) {
+    $id = $_GET['id'];
+    
+    // Aquí puedes implementar la lógica para recuperar y mostrar el formulario de edición del producto con el ID dado
+    echo "Editar producto con ID: " . $id;
+} else {
+    // Si no se proporciona un ID válido, redirige a alguna página de error o de lista de productos
+    header("Location: lista_productos.php");
+    exit;
+}
+?>
+<?php
+// Verifica si se ha pasado un ID de producto válido
+if(isset($_GET['id']) && !empty($_GET['id'])) {
+    $id = $_GET['id'];
+    
+    // Aquí puedes implementar la lógica para eliminar el producto con el ID dado
+    // Por ejemplo:
+    // $sql = "DELETE FROM productos WHERE idproductos = $id";
+    // mysqli_query($conectar, $sql);
+    echo "Eliminar producto con ID: " . $id;
+} else {
+    // Si no se proporciona un ID válido, redirige a alguna página de error o de lista de productos
+    header("Location: lista_productos.php");
+    exit;
+}
+?>
+
 <?php
 if (isset($_POST['action1'])) {
     require ('connect.php');
