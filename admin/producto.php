@@ -25,7 +25,7 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-lg-6">
+    <div class="col-lg-4">
       <h2>Categoria de Producto</h2>
       <div class="card card-login mx-auto mt-4">
         <div class="card-body">
@@ -102,24 +102,39 @@
       </div>
     </div>
 
-    <div class="col-lg-6">
+<div class="col-lg-6">
   <h2>Tabla de Productos</h2>
   <table class="table">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Nombre</th>
-        <th>Categoría</th>
-        <th>Precio</th>
-        <th>Imagen</th>
-        <th>Descripción</th>
-      </tr>
-    </thead>
-    <tbody>
-     
-    </tbody>
-  </table>
-</div>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>Categoría</th>
+      <th>Precio</th>
+      <th>Imagen</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <?php
+    require('connect.php');
+    $sql = "SELECT productos.idproductos, productos.nombre, categorias.nombre AS categoria, productos.precio, productos.imagen, productos.descripcion 
+            FROM designdb.productos 
+            JOIN designdb.categorias ON productos.categorias_idcategorias = categorias.idcategorias";
+    $result = mysqli_query($conectar, $sql);
+    while ($row = mysqli_fetch_array($result)) {
+        echo "<tr>";
+        echo "<td>" . $row['idproductos'] . "</td>";
+        echo "<td>" . $row['nombre'] . "</td>";
+        echo "<td>" . $row['categoria'] . "</td>";
+        echo "<td>" . $row['precio'] . "</td>";
+        echo "<td><img src=" . $row['imagen'] . "' width='50'></td>";
+        echo "<td>" . $row['descripcion'] . "</td>";
+        echo "</tr>";
+    }
+    ?>
+  </tbody>
+</table>
 
   </div>
 </div>
