@@ -150,7 +150,7 @@
                     echo "<td>" . $row['nombre'] . "</td>";
                     echo "<td>" . $row['categoria'] . "</td>";
                     echo "<td>" . $row['precio'] . "</td>";
-                    echo "<td><img src='...'" . $row['imagen'] . "' width='50'></td>";
+                    echo "<td><img src='../" . $row['imagen'] . "' width='100px' height='100px' alt='" . "'></td>";
                     echo "<td>" . $row['descripcion'] . "</td>";
                     echo "<td>
                         <a href='editar_producto.php?id=" . $row['idproductos'] . "' class='btn btn-info btn-sm'>Editar</a>

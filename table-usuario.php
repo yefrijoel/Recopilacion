@@ -1,3 +1,57 @@
+<?php
+if(isset($_POST['action'])){
+    require "connect.php";
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    // Consulta para buscar el usuario con el rol de 10 (admin)
+    $sql = "SELECT * FROM meseros WHERE username = ? AND password = ? AND rol_idrol = 10";
+    $stmt = $conectar->prepare($sql);
+    $stmt->bind_param('ss', $username, $password);
+    $stmt->execute();
+    $result_admin = $stmt->get_result();
+    // Si encontramos un usuario con rol de 10, redirigimos al panel de administrador
+    if($result_admin->num_rows > 0){
+        session_start();
+        $_SESSION['username'] = $username;
+        header("Location:admin/admin.php");
+        exit; // Es importante salir del script después de la redirección
+    }
+
+    // Si no se encontró un usuario con rol de 10, buscamos el rol de 20 (mesero)
+    $sql = "SELECT * FROM meseros WHERE username = ? AND password = ? AND rol_idrol = 20";
+    $stmt = $conectar->prepare($sql);
+    $stmt->bind_param('ss', $username, $password);
+    $stmt->execute();
+    $result_mesero = $stmt->get_result();
+
+    // Si encontramos un usuario con rol de 20, redirigimos al panel de pedidos
+    if($result_mesero->num_rows > 0){
+        session_start();
+        $_SESSION['username'] = $username;
+       header("Location:admin/carrito.php");
+        exit; // Salir del script después de la redirección
+    }
+
+    // Si no se encontró un usuario con rol de 10, buscamos el rol de 20 (mesero)
+    $sql = "SELECT * FROM meseros WHERE username = ? AND password = ? AND rol_idrol = 30";
+    $stmt = $conectar->prepare($sql);
+    $stmt->bind_param('ss', $username, $password);
+    $stmt->execute();
+    $result_mesero = $stmt->get_result();
+
+    // Si encontramos un usuario con rol de 20, redirigimos al panel de pedidos
+    if($result_mesero->num_rows > 0){
+        session_start();
+        $_SESSION['username'] = $username;
+       header("Location:admin/pedidos.php");
+        exit; // Salir del script después de la redirección
+    }
+
+    // Si no se encuentra ningún usuario con los roles especificados, podría mostrar un mensaje de error.
+    // Por ejemplo: echo "Nombre de usuario o contraseña incorrectos.";
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 	
@@ -97,43 +151,3 @@
 	<!-- END BODY TAG -->
 
 </html>
-<?php
-if(isset($_POST['action'])){
-    require "connect.php";
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-
-    // Consulta para buscar el usuario con el rol de 10 (admin)
-    $sql = "SELECT * FROM meseros WHERE username = ? AND password = ? AND rol_idrol = 10";
-    $stmt = $conectar->prepare($sql);
-    $stmt->bind_param('ss', $username, $password);
-    $stmt->execute();
-    $result_admin = $stmt->get_result();
-
-    // Si encontramos un usuario con rol de 10, redirigimos al panel de administrador
-    if($result_admin->num_rows > 0){
-        session_start();
-        $_SESSION['username'] = $username;
-        header("Location: ../admin/admin.php");
-        exit; // Es importante salir del script después de la redirección
-    }
-
-    // Si no se encontró un usuario con rol de 10, buscamos el rol de 20 (mesero)
-    $sql = "SELECT * FROM meseros WHERE username = ? AND password = ? AND rol_idrol = 20";
-    $stmt = $conectar->prepare($sql);
-    $stmt->bind_param('ss', $username, $password);
-    $stmt->execute();
-    $result_mesero = $stmt->get_result();
-
-    // Si encontramos un usuario con rol de 20, redirigimos al panel de pedidos
-    if($result_mesero->num_rows > 0){
-        session_start();
-        $_SESSION['username'] = $username;
-        header("Location: ../admin/pedidos.php");
-        exit; // Salir del script después de la redirección
-    }
-
-    // Si no se encuentra ningún usuario con los roles especificados, podría mostrar un mensaje de error.
-    // Por ejemplo: echo "Nombre de usuario o contraseña incorrectos.";
-}
-?>
