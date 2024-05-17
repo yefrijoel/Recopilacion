@@ -1,259 +1,273 @@
-
 <!-- PHP INCLUDES -->
 
 
 <!DOCTYPE html>
 <html lang="en">
-	
-	<!-- HEAD -->
 
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0"/>
-		<meta name="author" content="JAIRI IDRISS">
-		<title>Restaurant</title>
+<!-- HEAD -->
 
-		<!-- EXTERNAL CSS LINKS -->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0" />
+    <meta name="author" content="JAIRI IDRISS">
+    <title>Restaurant</title>
 
-		<link rel="stylesheet" type="text/css" href="Design/css/bootstrap.min.css">
-		<link rel="stylesheet" type="text/css" href="Design/fonts/css/all.min.css">
-		<link rel="stylesheet" type="text/css" href="Design/css/main.css">
-		<link rel="stylesheet" type="text/css" href="Design/css/responsive.css">
+    <!-- EXTERNAL CSS LINKS -->
 
-		<!-- GOOGLE FONTS -->
+    <link rel="stylesheet" type="text/css" href="Design/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="Design/fonts/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="Design/css/main.css">
+    <link rel="stylesheet" type="text/css" href="Design/css/responsive.css">
 
-		<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;1,100;1,200;1,300;1,400;1,500&display=swap" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Prata&display=swap" rel="stylesheet">
+    <!-- GOOGLE FONTS -->
 
-	</head>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;1,100;1,200;1,300;1,400;1,500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Prata&display=swap" rel="stylesheet">
 
-	<!-- BODY -->
+</head>
 
-	<body>
-        
+<!-- BODY -->
+
+<body>
+
     <?php include "menupt.php" ?>
     <!-- START NAVBAR SECTION -->
-	<div class="header-height" style="height: 120px;"></div>
+    <div class="header-height" style="height: 120px;"></div>
 
     <!-- END NAVBAR SECTION -->
-	<!-- HOME SECTION -->
+    <!-- HOME SECTION -->
 
-	<section class="home-section" id="home">
-		<div class="container">
-			<div class="row" style="flex-wrap: nowrap;">
-				<div class="col-md-6 home-left-section">
-					<div style="padding: 100px 0px; color: white;">
-						<h1>
-							RESTAURANTE MIS VALES.
-						</h1>
-						<h2>
-							MAKING PEOPLE HAPPY
-						</h2>
-						<hr>
-						<p>
-						Disfruta y degusta de los mas deliciosos platos típicos de la región en MIS VALES
-						</p>
-						<div style="display: flex;">							
-							<a href="#menus" class="bttn_style_2" style="display: flex;justify-content: center;align-items: center;">
-							VER MENÚ
-								<i class="fas fa-angle-right"></i>
-							</a>
-						</div>
-					</div>
-				</div>
-				
-			</div>
-		</div>
-	</section>
-
-	<!-- OUR QUALITIES SECTION -->
-
-	<section class="our_qualities" style="padding:100px 0px;">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-4">
-					<div class="our_qualities_column">
-	                    <img src="Design/images/quality_food_img.png" >
-	                    <div class="caption">
-	                        <h3>
-							Alimentos de calidad
-	                        </h3>
-	                        <p>
-							Disfruta de la mas alta calidad de nuestros alimento, calidad certificada
-	                        </p>
-	                    </div>
-	                </div>
-				</div>
-				<div class="col-md-4">
-					<div class="our_qualities_column">
-	                    <img src="Design/images/fast_delivery_img.png" >
-	                    <div class="caption">
-	                        <h3>
-							Servicio de calidad
-	                        </h3>
-	                        <p>
-							Contamos con un eficiente servicio en la entrega de nuestros productos.
-	                        </p>
-	                    </div>
-	                </div>
-				</div>
-				<div class="col-md-4">
-					<div class="our_qualities_column">
-	                    <img src="Design/images/original_taste_img.png" >
-	                    <div class="caption">
-	                        <h3>
-							Alimentos de calidad
-	                        </h3>
-	                        <p>
-							Visítanos y deleita tu paladar con las mas deliciosas comidas típicas de la región y nuestros platos totalmente exclusivos
-	                        </p>
-	                    </div>
-	                </div>
-				</div>
-
-			</div>
-		</div>
-	</section>
-
-	<!-- OUR MENUS SECTION -->
-
-	<section class="our_menus" id="menus">
-		<div class="container">
-			<h2 style="text-align: center;margin-bottom: 30px">DESCUBRE NUESTROS MENÚS</h2>			
-			<?php
-    require('connect.php');
-    $sql = "SELECT * FROM categorias";
-    $tabla = mysqli_query($conectar, $sql);
-?>
-
-<div class="menus_tabs">
-    <div class="menus_tabs_picker">
-        <div class="row">
-            <?php while ($fila = mysqli_fetch_array($tabla)) { ?>
-                <div class="col">
-                    <div class="tab_category" id="<?php echo $fila[0] ?>">
-                        <?php echo $fila[1] ?>
-                    </div>
-                </div>
-            <?php } ?>
-        </div>
-    </div>
-    <div class="menus_tab">
-        <?php
-            $sql = "SELECT * FROM designdb.productos";
-            $tabla = mysqli_query($conectar, $sql);
-            $productos = mysqli_fetch_all($tabla, MYSQLI_ASSOC);
-        ?>
-        <?php foreach ($productos as $producto) { ?>
-            <div class="menu_item tab_category_content" id="<?php echo $producto['categorias_idcategorias'] ?>" style="display: none;">
-                <div class="row py-4">
-                    <div class="col-lg-3 menu-item">
-                        <div class="thumbnail" style="cursor:pointer">
-                            <div class="menu-image">
-                                <div class="image-preview" style="background-image: url(<?php echo $producto['imagen'] ?>);"></div>
-                            </div>
-                            <div class="caption">
-                                <h5><?php echo $producto['nombre'] ?></h5>
-                                <p><?php echo $producto['descripcion'] ?></p>
-                                <span class="menu_price"><?php echo $producto['precio'] ?></span>
-                            </div>
+    <section class="home-section" id="home">
+        <div class="container">
+            <div class="row" style="flex-wrap: nowrap;">
+                <div class="col-md-6 home-left-section">
+                    <div style="padding: 100px 0px; color: white;">
+                        <h1>
+                            RESTAURANTE MIS VALES.
+                        </h1>
+                        <h2>
+                            MAKING PEOPLE HAPPY
+                        </h2>
+                        <hr>
+                        <p>
+                            Disfruta y degusta de los mas deliciosos platos típicos de la región en MIS VALES
+                        </p>
+                        <div style="display: flex;">
+                            <a href="#menus" class="bttn_style_2" style="display: flex;justify-content: center;align-items: center;">
+                                VER MENÚ
+                                <i class="fas fa-angle-right"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
+
             </div>
-        <?php } ?>
-    </div>
-</div>
+        </div>
+    </section>
 
-<style>
-    .tab_category.selected {
-        text-decoration: underline;
-        cursor: pointer;
-    }
-</style>
+    <!-- OUR QUALITIES SECTION -->
 
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var categories = document.querySelectorAll('.tab_category');
-        categories.forEach(function(category) {
-            category.addEventListener('click', function() {
-                var categoryId = this.getAttribute('id');
-                var products = document.querySelectorAll('.tab_category_content');
-                products.forEach(function(product) {
-                    if (product.getAttribute('id') === categoryId) {
-                        product.style.display = 'block';
-                    } else {
-                        product.style.display = 'none';
+    <section class="our_qualities" style="padding:100px 0px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="our_qualities_column">
+                        <img src="Design/images/quality_food_img.png">
+                        <div class="caption">
+                            <h3>
+                                Alimentos de calidad
+                            </h3>
+                            <p>
+                                Disfruta de la mas alta calidad de nuestros alimento, calidad certificada
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="our_qualities_column">
+                        <img src="Design/images/fast_delivery_img.png">
+                        <div class="caption">
+                            <h3>
+                                Servicio de calidad
+                            </h3>
+                            <p>
+                                Contamos con un eficiente servicio en la entrega de nuestros productos.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="our_qualities_column">
+                        <img src="Design/images/original_taste_img.png">
+                        <div class="caption">
+                            <h3>
+                                Alimentos de calidad
+                            </h3>
+                            <p>
+                                Visítanos y deleita tu paladar con las mas deliciosas comidas típicas de la región y nuestros platos totalmente exclusivos
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- OUR MENUS SECTION -->
+
+    <section class="our_menus" id="menus">
+        <div class="container">
+            <h2 style="text-align: center;margin-bottom: 30px">DESCUBRE NUESTROS MENÚS</h2>
+            <?php
+            require('connect.php');
+            $sql = "SELECT * FROM categorias";
+            $tabla = mysqli_query($conectar, $sql);
+            $categorias = mysqli_fetch_all($tabla, MYSQLI_ASSOC);
+            $firstCategory = $categorias[0]['idcategorias'];
+            ?>
+
+            <div class="menus_tabs">
+                <div class="menus_tabs_picker">
+                    <div class="row">
+                        <?php foreach ($categorias as $categoria) { ?>
+                            <div class="col">
+                                <div class="tab_category <?php echo $categoria['idcategorias'] == $firstCategory ? 'selected' : '' ?>" id="<?php echo $categoria['idcategorias'] ?>">
+                                    <?php echo $categoria['nombre'] ?>
+                                </div>
+                            </div>
+                        <?php } ?>
+                    </div>
+                </div>
+                <div class="menus_tab d-flex flex-wrap">
+                    <?php
+                    $sql = "SELECT * FROM designdb.productos";
+                    $tabla = mysqli_query($conectar, $sql);
+                    $productos = mysqli_fetch_all($tabla, MYSQLI_ASSOC);
+                    ?>
+                    <?php $i = 0;
+                    foreach ($productos as $producto) { ?>
+                        <div class="menu_item tab_category_content col-lg-3 col-md-6 col-sm-12" id="<?php echo $producto['categorias_idcategorias'] ?>" style="display: none;">
+                            <div class="row py-4">
+                                <div class="col-12">
+                                    <div class="thumbnail" style="cursor:pointer ">
+                                        <div class="menu-image">
+                                            <img style="width: 150px; height: 150px" class="image-preview" src="<?php echo $producto['imagen'] ?>" alt="">
+                                        </div>
+                                        <div class="caption">
+                                            <h5><?php echo $producto['nombre'] ?></h5>
+                                            <p><?php echo $producto['descripcion'] ?></p>
+                                            <span class="menu_price"><?php echo $producto['precio'] ?></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <?php if (++$i % 2 == 0) {
+                            echo '<hr class="d-md-none d-sm-block"/>';
+                        } ?>
+                    <?php } ?>
+                </div>
+            </div>
+
+            <style>
+                .tab_category.selected {
+                    text-decoration: underline;
+                    cursor: pointer;
+                }
+            </style>
+
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    var categories = document.querySelectorAll('.tab_category');
+                    categories.forEach(function(category) {
+                        category.addEventListener('click', function() {
+                            var categoryId = this.getAttribute('id');
+                            var products = document.querySelectorAll('.tab_category_content');
+                            products.forEach(function(product) {
+                                if (product.getAttribute('id') === categoryId) {
+                                    product.style.display = 'block';
+                                } else {
+                                    product.style.display = 'none';
+                                }
+                            });
+
+                            // Remover clase 'selected' de todas las categorías
+                            categories.forEach(function(cat) {
+                                cat.classList.remove('selected');
+                            });
+
+                            // Agregar clase 'selected' a la categoría seleccionada
+                            this.classList.add('selected');
+                        });
+                    });
+                    var firstCategory = document.querySelector('.tab_category.selected');
+                    if (firstCategory) {
+                        firstCategory.click();
                     }
                 });
+            </script>
+        </div>
+    </section>
 
-                // Remover clase 'selected' de todas las categorías
-                categories.forEach(function(cat) {
-                    cat.classList.remove('selected');
-                });
-                
-                // Agregar clase 'selected' a la categoría seleccionada
-                this.classList.add('selected');
-            });
-        });
-    });
-</script>
+    <!-- IMAGE GALLERY -->
 
-			 
-										
-									</div>								
-	</section>
+    <section class="image-gallery" id="gallery">
+        <div class="container">
+            <h2 style="text-align: center;margin-bottom: 30px">IMAGE GALLERY</h2>
+            <div class='row'>
+                <div class='col-md-4 col-lg-3' style='padding: 15px;'>
+                    <div style="background-image: url('admin/Uploads/images/58146_Moroccan Chicken Tagine.jpeg') !important;background-repeat: no-repeat;background-position: 50% 50%;background-size: cover;background-clip: border-box;box-sizing: border-box;overflow: hidden;height: 230px;">
+                    </div>
 
-	<!-- IMAGE GALLERY -->
+                </div>
+                <div class='col-md-4 col-lg-3' style='padding: 15px;'>
+                    <div style="background-image: url('Design/images/img_1.jpg') !important;background-repeat: no-repeat;background-position: 50% 50%;background-size: cover;background-clip: border-box;box-sizing: border-box;overflow: hidden;height: 230px;">
+                    </div>
 
-	<section class="image-gallery" id="gallery">
-		<div class="container">
-			<h2 style="text-align: center;margin-bottom: 30px">IMAGE GALLERY</h2>
-			<div class = 'row'><div class = 'col-md-4 col-lg-3' style = 'padding: 15px;'>
-	                		<div style = "background-image: url('admin/Uploads/images/58146_Moroccan Chicken Tagine.jpeg') !important;background-repeat: no-repeat;background-position: 50% 50%;background-size: cover;background-clip: border-box;box-sizing: border-box;overflow: hidden;height: 230px;">
-	                		</div>
+                </div>
+                <div class='col-md-4 col-lg-3' style='padding: 15px;'>
+                    <div style="background-image: url('Design/images/img_2.jpg') !important;background-repeat: no-repeat;background-position: 50% 50%;background-size: cover;background-clip: border-box;box-sizing: border-box;overflow: hidden;height: 230px;">
+                    </div>
 
-	                		</div><div class = 'col-md-4 col-lg-3' style = 'padding: 15px;'>
-	                		<div style = "background-image: url('Design/images/img_1.jpg') !important;background-repeat: no-repeat;background-position: 50% 50%;background-size: cover;background-clip: border-box;box-sizing: border-box;overflow: hidden;height: 230px;">
-	                		</div>
+                </div>
+                <div class='col-md-4 col-lg-3' style='padding: 15px;'>
+                    <div style="background-image: url('Design/images/img_3.jpg') !important;background-repeat: no-repeat;background-position: 50% 50%;background-size: cover;background-clip: border-box;box-sizing: border-box;overflow: hidden;height: 230px;">
+                    </div>
 
-	                		</div><div class = 'col-md-4 col-lg-3' style = 'padding: 15px;'>
-	                		<div style = "background-image: url('Design/images/img_2.jpg') !important;background-repeat: no-repeat;background-position: 50% 50%;background-size: cover;background-clip: border-box;box-sizing: border-box;overflow: hidden;height: 230px;">
-	                		</div>
+                </div>
+                <div class='col-md-4 col-lg-3' style='padding: 15px;'>
+                    <div style="background-image: url('admin/Uploads/images/burger.jpeg') !important;background-repeat: no-repeat;background-position: 50% 50%;background-size: cover;background-clip: border-box;box-sizing: border-box;overflow: hidden;height: 230px;">
+                    </div>
 
-	                		</div><div class = 'col-md-4 col-lg-3' style = 'padding: 15px;'>
-	                		<div style = "background-image: url('Design/images/img_3.jpg') !important;background-repeat: no-repeat;background-position: 50% 50%;background-size: cover;background-clip: border-box;box-sizing: border-box;overflow: hidden;height: 230px;">
-	                		</div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-	                		</div><div class = 'col-md-4 col-lg-3' style = 'padding: 15px;'>
-	                		<div style = "background-image: url('admin/Uploads/images/burger.jpeg') !important;background-repeat: no-repeat;background-position: 50% 50%;background-size: cover;background-clip: border-box;box-sizing: border-box;overflow: hidden;height: 230px;">
-	                		</div>
+    <!-- CONTACT US SECTION -->
 
-	                		</div></div>		</div>
-	</section>
-
-	<!-- CONTACT US SECTION -->
-
-	<section class="contact-section" id="contact">
+    <section class="contact-section" id="contact">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 sm-padding">
                     <div class="contact-info">
                         <h2>
-                            Get in touch with us & 
+                            Get in touch with us &
                             <br>send us message today!
                         </h2>
                         <p>
                             Saasbiz is a different kind of architecture practice. Founded by LoganCee in 1991, we’re an employee-owned firm pursuing a democratic design process that values everyone’s input.
                         </p>
                         <h3>
-                            1580  Boone Street, Corpus Christi, TX, 78476 - USA                        </h3>
+                            1580 Boone Street, Corpus Christi, TX, 78476 - USA </h3>
                         <h4>
-                            <span>Email:</span> 
-                            vincent.pizza@gmail.com                            <br> 
-                            <span>Phone:</span> 
-                            088866777555                        </h4>
+                            <span>Email:</span>
+                            vincent.pizza@gmail.com <br>
+                            <span>Phone:</span>
+                            088866777555
+                        </h4>
                     </div>
                 </div>
                 <div class="col-lg-6 sm-padding">
@@ -263,13 +277,13 @@
                                 <div class="col-sm-6">
                                     <input type="text" id="contact_name" name="name" oninput="document.getElementById('invalid-name').innerHTML = ''" onkeyup="this.value=this.value.replace(/[^\sa-zA-Z]/g,'');" class="form-control" placeholder="Name">
                                     <div class="invalid-feedback" id="invalid-name" style="display: block">
-                                    	
+
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <input type="email" id="contact_email" name="email" oninput="document.getElementById('invalid-email').innerHTML = ''" class="form-control" placeholder="Email">
                                     <div class="invalid-feedback" id="invalid-email" style="display: block">
-                                    	
+
                                     </div>
                                 </div>
                             </div>
@@ -277,7 +291,7 @@
                                 <div class="col-md-12">
                                     <input type="text" id="contact_subject" name="subject" oninput="document.getElementById('invalid-subject').innerHTML = ''" onkeyup="this.value=this.value.replace(/[^\sa-zA-Z]/g,'');" class="form-control" placeholder="Subject">
                                     <div class="invalid-feedback" id="invalid-subject" style="display: block">
-                                    	
+
                                     </div>
                                 </div>
                             </div>
@@ -285,7 +299,7 @@
                                 <div class="col-md-12">
                                     <textarea id="contact_message" name="message" oninput="document.getElementById('invalid-message').innerHTML = ''" cols="30" rows="5" class="form-control message" placeholder="Message"></textarea>
                                     <div class="invalid-feedback" id="invalid-message" style="display: block">
-                                    	
+
                                     </div>
                                 </div>
                             </div>
@@ -303,39 +317,39 @@
         </div>
     </section>
 
-	<!-- OUR QUALITIES SECTION -->
-	
-	<section class="our_qualities_v2">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-4" style="padding: 10px;">
-					<div class="quality quality_1">
-						<div class="text_inside_quality">
-							<h5>Quality Foods</h5>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4" style="padding: 10px;">
-					<div class="quality quality_2">
-						<div class="text_inside_quality">
-							<h5>Fastest Delivery</h5>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4" style="padding: 10px;">
-					<div class="quality quality_3">
-						<div class="text_inside_quality">
-							<h5>Original Recipes</h5>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
+    <!-- OUR QUALITIES SECTION -->
 
-	<!-- WIDGET SECTION / FOOTER -->
+    <section class="our_qualities_v2">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4" style="padding: 10px;">
+                    <div class="quality quality_1">
+                        <div class="text_inside_quality">
+                            <h5>Quality Foods</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" style="padding: 10px;">
+                    <div class="quality quality_2">
+                        <div class="text_inside_quality">
+                            <h5>Fastest Delivery</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" style="padding: 10px;">
+                    <div class="quality quality_3">
+                        <div class="text_inside_quality">
+                            <h5>Original Recipes</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-	<section class="widget_section" style="background-color: #222227;padding: 100px 0;">
+    <!-- WIDGET SECTION / FOOTER -->
+
+    <section class="widget_section" style="background-color: #222227;padding: 100px 0;">
         <div class="container">
             <div class="row">
                 <div class="col-lg-3 col-md-6">
@@ -354,15 +368,15 @@
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
-                     <div class="footer_widget">
+                    <div class="footer_widget">
                         <h3>Headquarters</h3>
                         <p>
-                            1580  Boone Street, Corpus Christi, TX, 78476 - USA                        </p>
+                            1580 Boone Street, Corpus Christi, TX, 78476 - USA </p>
                         <p>
-                            vincent.pizza@gmail.com                            <br>
-                            088866777555   
+                            vincent.pizza@gmail.com <br>
+                            088866777555
                         </p>
-                     </div>
+                    </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <div class="footer_widget">
@@ -393,21 +407,20 @@
         </div>
     </section>
     <!-- FOOTER BOTTOM  -->
-<?php include "copir.php" ?>
-	
-		<!-- INCLUDE JS SCRIPTS -->
+    <?php include "copir.php" ?>
 
-		<script src="Design/js/jquery.min.js"></script>
-		<script src="Design/js/bootstrap.min.js"></script>
-		<script src="Design/js/bootstrap.bundle.min.js"></script>
-		<script src="Design/js/main.js"></script>
-		<script src="Design/js/sjava.js"></script>
+    <!-- INCLUDE JS SCRIPTS -->
 
-	</body>
+    <script src="Design/js/jquery.min.js"></script>
+    <script src="Design/js/bootstrap.min.js"></script>
+    <script src="Design/js/bootstrap.bundle.min.js"></script>
+    <script src="Design/js/main.js"></script>
+    <script src="Design/js/sjava.js"></script>
 
-	<!-- END BODY TAG -->
+</body>
+
+<!-- END BODY TAG -->
 
 </html>
 
 <!-- END HTML TAG -->
-    
