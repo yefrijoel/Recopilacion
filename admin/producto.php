@@ -138,8 +138,8 @@
                         <?php
                         require('connect.php');
                         $sql = "SELECT productos.idproductos, productos.nombre, categorias.nombre AS categoria, productos.precio, productos.imagen, productos.descripcion 
-                        FROM designdb.productos 
-                        JOIN designdb.categorias ON productos.categorias_idcategorias = categorias.idcategorias";
+                FROM designdb.productos 
+                JOIN designdb.categorias ON productos.categorias_idcategorias = categorias.idcategorias";
                         $result = mysqli_query($conectar, $sql);
                         while ($row = mysqli_fetch_array($result)) {
                           echo '<tr>';
@@ -150,9 +150,9 @@
                           echo '<td><img src="../' . $row['imagen'] . '" width="100px" height="100px" alt="' . $row['nombre'] . '"></td>';
                           echo '<td>' . $row['descripcion'] . '</td>';
                           echo '<td>
-                                   <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalEditarProducto" onclick="llenarModalEditarProducto(' . $row['idproductos'] . ')">Editar</button>
-                                   <button type="button" class="btn btn-danger btn-sm" onclick="eliminarProducto(' . $row['idproductos'] . ')">Eliminar</button>
-                               </td>';
+                   <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalEditarProducto" onclick="llenarModalEditarProducto(' . $row['idproductos'] . ')">Editar</button>
+                   <button type="button" class="btn btn-danger btn-sm" onclick="eliminarProducto(' . $row['idproductos'] . ')">Eliminar</button>
+                 </td>';
                           echo '</tr>';
                         }
                         ?>
@@ -162,25 +162,28 @@
                 </div>
 
                 <script>
-                  function buscarProductoEnTabla(busqueda){
-                    var tbody = document.getElementById('tbodytabla');
+                  function buscarProductoEnTabla(busqueda) {
+                    var tbody = document.getElementById('tbodyTabla');
                     var filas = tbody.getElementsByTagName('tr');
                     var resultado = [];
                     for (var i = 0; i < filas.length; i++) {
                       var fila = filas[i];
-                      var nombre = fila.getElementsByTagName('td')[1].textContent;
-                      if (nombre.toUpperCase().includes(busqueda.toUpperCase()) || nombre.toLowerCase().includes(busqueda.toLowerCase())) {
+                      var nombre = fila.getElementsByTagName('td')[0].innerText;
+                      if (nombre.toUpperCase().includes(busqueda.toUpperCase())) {
                         resultado.push(fila);
                       }
                     }
-                    for (var i = tbody.childNodes.length - 1; i >= 0; i--) {
-                      tbody.removeChild(tbody.childNodes[i]);
+                    // Limpiar la tabla
+                    while (tbody.firstChild) {
+                      tbody.removeChild(tbody.firstChild);
                     }
+                    // Añadir las filas encontradas
                     for (var i = 0; i < resultado.length; i++) {
                       tbody.appendChild(resultado[i]);
                     }
                   }
                 </script>
+
 
                 <!-- Pie del Modal -->
                 <div class="modal-footer">
