@@ -255,26 +255,7 @@
           </div>
         </div>
 
-        <script>
-          function buscarProductoEnTabla / buscaProductoEnTabla() {
-            var input, filter, table, tr, td, i, txtValue;
-            input = document.getElementById("buscarProducto");
-            filter = input.value.toUpperCase();
-            table = document.getElementById("tablaProducto");
-            tr = table.getElementsByTagName("tr");
-            for (i = 0; i < tr.length; i++) {
-              td = tr[i].getElementsByTagName("td");
-              for (var j = 0; j < td.length; j++) {
-                txtValue = td[j].textContent || td[j].innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                  tr[i].style.display = "";
-                } else {
-                  tr[i].style.display = "none";
-                }
-              }
-            }
-          }
-        </script>
+        
 
       </div>
     </div>
