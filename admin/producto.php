@@ -162,27 +162,36 @@
                 </div>
 
                 <script>
+                  var originalRows = [];
+
+                  window.onload = function() {
+                    var tbody = document.getElementById('tbodyTabla');
+                    var filas = Array.from(tbody.getElementsByTagName('tr'));
+                    originalRows = filas.map(function(fila) {
+                      return fila.cloneNode(true);
+                    });
+                  };
+
                   function buscarProductoEnTabla(busqueda) {
                     var tbody = document.getElementById('tbodyTabla');
-                    var filas = tbody.getElementsByTagName('tr');
-                    var resultado = [];
-                    for (var i = 0; i < filas.length; i++) {
-                      var fila = filas[i];
-                      var nombre = fila.getElementsByTagName('td')[0].innerText;
-                      if (nombre.toUpperCase().includes(busqueda.toUpperCase())) {
-                        resultado.push(fila);
-                      }
+                    tbody.innerHTML = '';
+                    if (busqueda === '') {
+                      originalRows.forEach(function(fila) {
+                        tbody.appendChild(fila);
+                      });
+                      return;
                     }
-                    // Limpiar la tabla
-                    while (tbody.firstChild) {
-                      tbody.removeChild(tbody.firstChild);
-                    }
-                    // Añadir las filas encontradas
-                    for (var i = 0; i < resultado.length; i++) {
-                      tbody.appendChild(resultado[i]);
-                    }
+                    var busquedaUpper = busqueda.toUpperCase();
+                    var resultado = originalRows.filter(function(fila) {
+                      var nombre = fila.getElementsByTagName('td')[0].innerText.toUpperCase();
+                      return nombre.includes(busquedaUpper);
+                    });
+                    resultado.forEach(function(fila) {
+                      tbody.appendChild(fila);
+                    });
                   }
                 </script>
+
 
 
                 <!-- Pie del Modal -->
