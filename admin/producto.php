@@ -170,6 +170,30 @@
                   </div>
                 </div>
                 <script>
+                  function eliminarProducto(idProducto) {
+                    if (confirm("¿Estás seguro de que deseas eliminar este producto?")) {
+                      // Enviar una solicitud AJAX para eliminar el producto
+                      $.ajax({
+                        url: 'eliminar_producto.php', // Ruta del script PHP que maneja la eliminación
+                        method: 'POST',
+                        data: {
+                          idProducto: idProducto
+                        },
+                        success: function(response) {
+                          // Manejar la respuesta del servidor
+                          alert(response); // Mostrar un mensaje de éxito o error
+                          // Recargar la página para actualizar la tabla de productos
+                          location.reload();
+                        },
+                        error: function(xhr, status, error) {
+                          // Manejar errores de la solicitud AJAX
+                          alert("Error al eliminar el producto: " + error);
+                        }
+                      });
+                    }
+                  }
+
+
                   var originalRows = [];
 
                   window.onload = function() {
@@ -238,6 +262,7 @@
                       }
                       ?>
                     </select>
+
                   </div>
 
                   <div class="form-group">
@@ -253,7 +278,7 @@
                     <label for="descripcionProducto">Descripción</label>
                     <textarea class="form-control" id="descripcionProducto" name="DescripcionProducto" rows="3"></textarea>
                   </div>
-                  <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                  <button type="submit" name="action5" class="btn btn-primary">Guardar cambios</button>
                 </form>
               </div>
               <div class="modal-footer">
@@ -290,6 +315,7 @@
 
     <!-- ===== IONICONS ===== -->
     <script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -353,4 +379,60 @@ if (isset($_POST['action'])) {
 }
 ?>
 
+<?php
+if (isset($_POST['action5'])) {
+  require('connect.php');
+  $idpro = $_POST['idpro'];
+  $nombre = $_POST['nombreProducto'];
+  $catego = $_POST['categoriaProducto'];
+  $precio = $_POST['precioProducto'];
+  $decri = $_POST['DescripcionProducto'];
+  $image = isset($_FILES["imagenProducto"]["name"]) ? basename($_FILES["imagenProducto"]["name"]) : "";
 
+  // Actualizar los datos del producto en la base de datos
+  $sql = "UPDATE productos SET nombre='$nombre', categorias_idcategorias='$catego', precio='$precio', imagen='$image', descripcion='$decri' WHERE idpro='$idpro'";
+  if (move_uploaded_file($_FILES["imagenProducto"]["tmp_name"], "img/" . $_FILES["imagenProducto"]["name"])) {
+    $resultado = mysqli_query($conectar, $sql);
+    if ($resultado) {
+      header("Location: producto.php?msj=Editado correctamente");
+      exit;
+    } else {
+      echo "Error al editar";
+    }
+  } else {
+    $sqlImagen = "SELECT imagen FROM productos WHERE idpro = $idpro";
+    $resultadoImagen = mysqli_query($conectar, $sqlImagen);
+    $rowImagen = mysqli_fetch_assoc($resultadoImagen);
+    $image = $rowImagen['imagen'];
+    $resultado = mysqli_query($conectar, $sql);
+    if ($resultado) {
+      header("Location: producto.php?msj=Editado correctamente");
+      exit;
+    } else {
+      echo "Error al editar";
+    }
+  }
+}
+?>
+
+
+<?php
+// Verificar si se recibió un ID de producto
+if (isset($_POST['idProducto'])) {
+  require('connect.php');
+  $idProducto = $_POST['idProducto'];
+
+  // Consulta SQL para eliminar el producto
+  $sql = "DELETE FROM productos WHERE idproductos = $idProducto";
+
+  // Ejecutar la consulta
+  if (mysqli_query($conectar, $sql)) {
+    echo "Producto eliminado correctamente";
+  } else {
+    echo "Error al eliminar el producto: " . mysqli_error($conectar);
+  }
+} else {
+  echo "ID de producto no proporcionado";
+}
+?>
+s
