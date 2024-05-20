@@ -114,11 +114,13 @@
                   <h4 class="modal-title">Tabla de Productos</h4>
                   <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
+
                 <!-- Busqueda sensiva en la tabla -->
-                <div class="input-group mb-3">
+                <div class="input-group mb-3" style="width: 300px; margin: 20px;">
                   <span class="input-group-text" id="basic-addon1"></span>
                   <input type="text" class="form-control" placeholder="Buscar" aria-label="Buscar" id="buscarProducto" onkeyup="buscarProductoEnTabla(this.value)" />
                 </div>
+
                 <!-- Cuerpo del Modal -->
                 <div class="modal-body">
                   <div class="table-responsive">
@@ -138,8 +140,8 @@
                         <?php
                         require('connect.php');
                         $sql = "SELECT productos.idproductos, productos.nombre, categorias.nombre AS categoria, productos.precio, productos.imagen, productos.descripcion 
-                FROM designdb.productos 
-                JOIN designdb.categorias ON productos.categorias_idcategorias = categorias.idcategorias";
+                       FROM designdb.productos 
+                     JOIN designdb.categorias ON productos.categorias_idcategorias = categorias.idcategorias";
                         $result = mysqli_query($conectar, $sql);
                         while ($row = mysqli_fetch_array($result)) {
                           echo '<tr>';
@@ -150,9 +152,16 @@
                           echo '<td><img src="../' . $row['imagen'] . '" width="100px" height="100px" alt="' . $row['nombre'] . '"></td>';
                           echo '<td>' . $row['descripcion'] . '</td>';
                           echo '<td>
-                   <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalEditarProducto" onclick="llenarModalEditarProducto(' . $row['idproductos'] . ')">Editar</button>
-                   <button type="button" class="btn btn-danger btn-sm" onclick="eliminarProducto(' . $row['idproductos'] . ')">Eliminar</button>
-                 </td>';
+                             <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalEditarProducto"
+                              data-id="' . $row['idproductos'] . '"
+                              data-nombre="' . $row['nombre'] . '"
+                              data-categoria="' . $row['categoria'] . '"
+                              data-precio="' . $row['precio'] . '"
+                              data-imagen="' . $row['imagen'] . '"
+                              data-descripcion="' . $row['descripcion'] . '"
+                              onclick="llenarModalEditarProducto(this)">Editar</button>
+                             <button type="button" class="btn btn-danger btn-sm" onclick="eliminarProducto(' . $row['idproductos'] . ')">Eliminar</button>
+                                </td>';
                           echo '</tr>';
                         }
                         ?>
@@ -160,7 +169,6 @@
                     </table>
                   </div>
                 </div>
-
                 <script>
                   var originalRows = [];
 
@@ -191,62 +199,9 @@
                     });
                   }
                 </script>
-
-
-
                 <!-- Pie del Modal -->
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                </div>
-
-                <!-- Modal para editar producto -->
-                <div class="modal fade" id="modalEditarProducto">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h4 class="modal-title">Editar producto</h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                      </div>
-                      <div class="modal-body">
-                        <form>
-                          <div class="form-group">
-                            <label for="nombreProducto">Nombre</label>
-                            <input type="text" class="form-control" id="nombreProducto" name="nombreProducto" aria-describedby="nombreProducto">
-                          </div>
-                          <div class="form-group">
-                            <label for="categoriaProducto">Categoría</label>
-                            <select class="form-control" id="categoriaProducto" name="categoriaProducto">
-                              <option value="">Seleccione una opción</option>
-                              <?php
-                              require('connect.php');
-                              $sql = "SELECT * FROM categorias";
-                              $resultado = mysqli_query($conectar, $sql);
-                              while ($fila = mysqli_fetch_array($resultado)) {
-                                echo '<option value="' . $fila['idcategorias'] . '">' . $fila['nombre'] . '</option>';
-                              }
-                              ?>
-                            </select>
-                          </div>
-                          <div class="form-group">
-                            <label for="precioProducto">Precio</label>
-                            <input type="number" class="form-control" id="precioProducto" name="precioProducto" aria-describedby="precioProducto">
-                          </div>
-                          <div class="form-group">
-                            <label for="imagenProducto">Imagen</label>
-                            <input type="file" class="form-control-file" id="imagenProducto" name="imagenProducto">
-                          </div>
-                          <div class="form-group">
-                            <label for="descripcionProducto">Descripción</label>
-                            <textarea class="form-control" id="descripcionProducto" name="DescripcionProducto" rows="3"></textarea>
-                          </div>
-                          <button type="submit" class="btn btn-primary">Guardar cambios</button>
-                        </form>
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                      </div>
-                    </div>
-                  </div>
                 </div>
 
 
@@ -254,8 +209,81 @@
             </div>
           </div>
         </div>
+        <!-- Modal para editar producto -->
+        <div class="modal fade" id="modalEditarProducto">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">Editar producto</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+              </div>
+              <div class="modal-body">
+                <form>
+                  <div class="form-group">
+                    <label for="nombreProducto">Nombre</label>
+                    <input type="text" class="form-control" id="nombreProducto" name="nombreProducto" aria-describedby="nombreProducto">
+                  </div>
+                  <div class="form-group">
+                    <label for="categoriaProducto">Categoría</label>
+                    <select class="form-control" id="categoriaProducto" name="categoriaProducto">
+                      <option value="">Seleccione una opción</option>
+                      <?php
+                      require('connect.php');
+                      $sql = "SELECT * FROM categorias";
+                      $resultado = mysqli_query($conectar, $sql);
+                      while ($fila = mysqli_fetch_array($resultado)) {
+                        // Verificar si la categoría actual coincide con la categoría del producto
+                        $selected = ($fila['idcategorias'] == $row['categorias_idcategorias']) ? 'selected' : '';
+                        echo '<option value="' . $fila['idcategorias'] . '" ' . $selected . '>' . $fila['nombre'] . '</option>';
+                      }
+                      ?>
+                    </select>
+                  </div>
 
-        
+                  <div class="form-group">
+                    <label for="precioProducto">Precio</label>
+                    <input type="number" class="form-control" id="precioProducto" name="precioProducto" aria-describedby="precioProducto">
+                  </div>
+                  <div class="form-group">
+                    <label for="imagenProducto">Imagen</label>
+                    <input type="file" class="form-control-file" id="imagenProducto" name="imagenProducto">
+                    <img id="imagenPreview" src="" alt="Imagen del producto" width="100px" height="100px">
+                  </div>
+                  <div class="form-group">
+                    <label for="descripcionProducto">Descripción</label>
+                    <textarea class="form-control" id="descripcionProducto" name="DescripcionProducto" rows="3"></textarea>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script>
+          function llenarModalEditarProducto(button) {
+            var id = button.getAttribute('data-id');
+            var nombre = button.getAttribute('data-nombre');
+            var categoria = button.getAttribute('data-categoria');
+            var precio = button.getAttribute('data-precio');
+            var imagen = button.getAttribute('data-imagen');
+            var descripcion = button.getAttribute('data-descripcion');
+
+            document.getElementById('nombreProducto').value = nombre;
+            document.getElementById('categoriaProducto').value = categoria;
+            document.getElementById('precioProducto').value = precio;
+            document.getElementById('descripcionProducto').value = descripcion;
+
+            var imagenPreview = document.getElementById('imagenPreview');
+            if (imagenPreview) {
+              imagenPreview.src = '../' + imagen;
+            }
+          }
+        </script>
+
+
 
       </div>
     </div>
@@ -274,35 +302,9 @@
 </body>
 
 </html>
-<?php
-// Verifica si se ha pasado un ID de producto válido
-if (isset($_GET['id']) && !empty($_GET['id'])) {
-  $id = $_GET['id'];
 
-  // Aquí puedes implementar la lógica para recuperar y mostrar el formulario de edición del producto con el ID dado
-  echo "Editar producto con ID: " . $id;
-} else {
-  // Si no se proporciona un ID válido, redirige a alguna página de error o de lista de productos
-  header("Location: lista_productos.php");
-  exit;
-}
-?>
-<?php
-// Verifica si se ha pasado un ID de producto válido
-if (isset($_GET['id']) && !empty($_GET['id'])) {
-  $id = $_GET['id'];
 
-  // Aquí puedes implementar la lógica para eliminar el producto con el ID dado
-  // Por ejemplo:
-  // $sql = "DELETE FROM productos WHERE idproductos = $id";
-  // mysqli_query($conectar, $sql);
-  echo "Eliminar producto con ID: " . $id;
-} else {
-  // Si no se proporciona un ID válido, redirige a alguna página de error o de lista de productos
-  header("Location: lista_productos.php");
-  exit;
-}
-?>
+
 
 <?php
 if (isset($_POST['action1'])) {
@@ -350,3 +352,5 @@ if (isset($_POST['action'])) {
   }
 }
 ?>
+
+
