@@ -1,37 +1,25 @@
-<!-- PHP INCLUDES -->
-
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+    <head>
+        <title>Title</title>
+        <!-- Required meta tags -->
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
 
-<!-- HEAD -->
+        <!-- Bootstrap CSS v5.2.1 -->
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+            crossorigin="anonymous"
+        />
+    </head>
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0" />
-    <meta name="author" content="JAIRI IDRISS">
-    <title>Restaurant</title>
-
-    <!-- EXTERNAL CSS LINKS -->
-
-    <link rel="stylesheet" type="text/css" href="Design/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="Design/fonts/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="Design/css/main.css">
-    <link rel="stylesheet" type="text/css" href="Design/css/responsive.css">
-
-    <!-- GOOGLE FONTS -->
-
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;1,100;1,200;1,300;1,400;1,500&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Prata&display=swap" rel="stylesheet">
-
-</head>
-
-<!-- BODY -->
-
-<body>
-    <!-- OUR MENUS SECTION -->
-
+    <body>
+        
     <section class="our_menus" id="menus">
         <div class="container" style="width: auto;">
             <h2 style="text-align: center;margin-bottom: 30px">DESCUBRE NUESTROS MENÚS</h2>
@@ -74,8 +62,10 @@
                                             <h5><?php echo $producto['nombre'] ?></h5>
                                             <p><?php echo $producto['descripcion'] ?></p>
                                             <span class="menu_price"><?php echo $producto['precio'] ?></span>
-                                            <br>
-                                            <button href="carrito.php?id=<?php echo $producto['idproductos'] ?>" class="btn btn-primary" id="productoalcarrito">Añadir al carrito</button>
+                                            <br>                                          
+                                            <button type="button" name="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#carritoModal" onclick="agregarAlCarrito(<?php echo $producto['idproductos'] ?>)">Anadir al carrito</button>
+                                           
+                                        
                                         </div>
                                     </div>
                                 </div>
@@ -125,21 +115,72 @@
                     }
                 });
             </script>
-        </div>
+        </div>       
     </section>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#carritoModal">Ver carrito</button>
+
+    <script>
+        var carrito = JSON.parse(localStorage.getItem('carrito') || '[]');
+
+        function agregarAlCarrito(idProducto, nombre, precio, imagen) {
+            var productoEnCarrito = carrito.find(p => p.idproductos == idProducto);
+            if (!productoEnCarrito) {
+                carrito.push({ idproductos: idProducto, nombre: nombre, precio: precio, imagen: imagen });
+                localStorage.setItem('carrito', JSON.stringify(carrito));
+            }
+            mostrarCarrito();
+        }
+
+        function mostrarCarrito() {
+            var carritoHTML = '';
+            carrito.forEach(producto => {
+                carritoHTML += `
+                    <div class="row">
+                        <div class="col-4">
+                            <img style="width: 100px; height: 100px" src="${producto.imagen}" alt="${producto.nombre}">
+                        </div>
+                        <div class="col-8">
+                            <h5>${producto.nombre}</h5>
+                            <span class="menu_price">${producto.precio}</span>
+                        </div>
+                    </div>
+                    <hr>
+                `;
+            });
+            var modalBody = document.querySelector('#carritoModal .modal-body');
+            modalBody.innerHTML = carritoHTML;
+        }
+    </script>
+
+<div class="modal fade" id="carritoModal" tabindex="-1" aria-labelledby="carritoModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="carritoModalLabel">Carrito</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary">Continuar comprando</button>
+                    <button type="button" class="btn btn-danger">Finalizar compra</button>
+                </div>
+            </div>
+        </div>
+    </div>
     
-    <!-- INCLUDE JS SCRIPTS -->
 
-    <script src="Design/js/jquery.min.js"></script>
-    <script src="Design/js/bootstrap.min.js"></script>
-    <script src="Design/js/bootstrap.bundle.min.js"></script>
-    <script src="Design/js/main.js"></script>
-    <script src="Design/js/sjava.js"></script>
+    
+        <script
+            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+            crossorigin="anonymous"
+        ></script>
 
-</body>
-
-<!-- END BODY TAG -->
-
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+            crossorigin="anonymous"
+        ></script>
+    </body>
 </html>
 
-<!-- END HTML TAG -->

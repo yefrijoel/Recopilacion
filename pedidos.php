@@ -1,6 +1,3 @@
-<!-- PHP INCLUDES -->
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,7 +29,8 @@
 <body>
     <!-- OUR MENUS SECTION -->
 
-    <section class="our_menus" id="menus">
+    <section class="our_menus" id="menus">   
+<a href="carrito.php" class="btn btn-primary">Ver Carrito</a>
         <div class="container" style="width: auto;">
             <h2 style="text-align: center;margin-bottom: 30px">DESCUBRE NUESTROS MENÚS</h2>
             <?php
@@ -75,7 +73,7 @@
                                             <p><?php echo $producto['descripcion'] ?></p>
                                             <span class="menu_price"><?php echo $producto['precio'] ?></span>
                                             <br>
-                                            <button href="carrito.php?id=<?php echo $producto['idproductos'] ?>" class="btn btn-primary" id="productoalcarrito">Añadir al carrito</button>
+                                            <button onclick="location.href='carrito.php?id=<?php echo $producto['idproductos'] ?>'" class="btn btn-primary">Añadir al carrito</button>
                                         </div>
                                     </div>
                                 </div>
@@ -141,5 +139,3 @@
 <!-- END BODY TAG -->
 
 </html>
-
-<!-- END HTML TAG -->
