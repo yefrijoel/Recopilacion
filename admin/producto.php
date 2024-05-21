@@ -230,79 +230,83 @@
           </div>
         </div>
         <!-- Modal para editar producto -->
-        <div class="modal fade" id="modalEditarProducto">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h4 class="modal-title">Editar producto</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-              </div>
-              <div class="modal-body">
-                <form>
-                  <div class="form-group">
-                    <label for="nombreProducto">Nombre</label>
-                    <input type="text" class="form-control" id="nombreProducto" name="nombreProducto" aria-describedby="nombreProducto">
-                  </div>
-                  <div class="form-group">
-                    <label for="categoriaProducto">Categoría</label>
-                    <select class="form-control" id="categoriaProducto" name="categoriaProducto">
-                      <option value="">Seleccione una opción</option>
-                      <?php
-                      require('connect.php');
-                      $sql = "SELECT * FROM categorias";
-                      $resultado = mysqli_query($conectar, $sql);
-                      while ($fila = mysqli_fetch_array($resultado)) {
-                        // Verificar si la categoría actual coincide con la categoría del producto
-                        $selected = ($fila['idcategorias'] == $row['categorias_idcategorias']) ? 'selected' : '';
-                        echo '<option value="' . $fila['idcategorias'] . '" ' . $selected . '>' . $fila['nombre'] . '</option>';
-                      }
-                      ?>
-                    </select>
-
-                  </div>
-
-                  <div class="form-group">
-                    <label for="precioProducto">Precio</label>
-                    <input type="number" class="form-control" id="precioProducto" name="precioProducto" aria-describedby="precioProducto">
-                  </div>
-                  <div class="form-group">
-                    <label for="imagenProducto">Imagen</label>
-                    <input type="file" class="form-control-file" id="imagenProducto" name="imagenProducto">
-                    <img id="imagenPreview" src="" alt="Imagen del producto" width="100px" height="100px">
-                  </div>
-                  <div class="form-group">
-                    <label for="descripcionProducto">Descripción</label>
-                    <textarea class="form-control" id="descripcionProducto" name="DescripcionProducto" rows="3"></textarea>
-                  </div>
-                  <button type="submit" name="action5" class="btn btn-primary">Guardar cambios</button>
-                </form>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-              </div>
-            </div>
+<div class="modal fade" id="modalEditarProducto">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Editar producto</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form action5="actualizarProducto.php" method="POST" enctype="multipart/form-data">
+          <div class="form-label-group">
+            <label for="nombreProducto">ID</label>
+            <input type="number" id="idpros" name="idpros" class="form-control">
           </div>
-        </div>
-        <script>
-          function llenarModalEditarProducto(button) {
-            var id = button.getAttribute('data-id');
-            var nombre = button.getAttribute('data-nombre');
-            var categoria = button.getAttribute('data-categoria');
-            var precio = button.getAttribute('data-precio');
-            var imagen = button.getAttribute('data-imagen');
-            var descripcion = button.getAttribute('data-descripcion');
+          <div class="form-group">
+            <label for="nombreProducto">Nombre</label>
+            <input type="text" class="form-control" id="nombreProducto" name="nombreProducto" aria-describedby="nombreProducto">
+          </div>
+          <div class="form-group">
+            <label for="categoriaProducto">Categoría</label>
+            <select class="form-control" id="categoriaProducto" name="categoriaProducto">
+              <option value="">Seleccione una opción</option>
+              <?php
+              require('connect.php');
+              $sql = "SELECT * FROM designdb.categorias";
+              $tabla = mysqli_query($conectar, $sql);
+              while ($fila = mysqli_fetch_array($tabla)) {
+                echo "<option value='$fila[0]'>";
+                echo $fila[1];
+                echo "</option>";
+              }
+              ?>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="precioProducto">Precio</label>
+            <input type="number" class="form-control" id="precioProducto" name="precioProducto" aria-describedby="precioProducto">
+          </div>
+          <div class="form-group">
+            <label for="imagenProducto">Imagen</label>
+            <input type="file" class="form-control-file" id="imagenProducto" name="imagenProducto">
+            <img id="imagenPreview" src="" alt="Imagen del producto" width="100px" height="100px">
+          </div>
+          <div class="form-group">
+            <label for="descripcionProducto">Descripción</label>
+            <textarea class="form-control" id="descripcionProducto" name="descripcionProducto" rows="3"></textarea>
+          </div>
+          <button type="submit" name="action5" class="btn btn-primary">Guardar cambios</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
 
-            document.getElementById('nombreProducto').value = nombre;
-            document.getElementById('categoriaProducto').value = categoria;
-            document.getElementById('precioProducto').value = precio;
-            document.getElementById('descripcionProducto').value = descripcion;
+<script>
+  function llenarModalEditarProducto(button) {
+    var id = button.getAttribute('data-id');
+    var nombre = button.getAttribute('data-nombre');
+    var categoria = button.getAttribute('data-categoria');
+    var precio = button.getAttribute('data-precio');
+    var imagen = button.getAttribute('data-imagen');
+    var descripcion = button.getAttribute('data-descripcion');
 
-            var imagenPreview = document.getElementById('imagenPreview');
-            if (imagenPreview) {
-              imagenPreview.src = '../' + imagen;
-            }
-          }
-        </script>
+    document.getElementById('idpros').value = id;
+    document.getElementById('nombreProducto').value = nombre;
+    document.getElementById('categoriaProducto').value = categoria;
+    document.getElementById('precioProducto').value = precio;
+    document.getElementById('descripcionProducto').value = descripcion;
+
+    var imagenPreview = document.getElementById('imagenPreview');
+    if (imagenPreview) {
+      imagenPreview.src = '../' + imagen;
+    }
+  }
+</script>
 
 
 
@@ -374,38 +378,39 @@ if (isset($_POST['action'])) {
 }
 ?>
 
+
 <?php
 if (isset($_POST['action5'])) {
   require('connect.php');
-  $idpro = $_POST['idpro'];
+  $idpros = $_POST['idpros'];
   $nombre = $_POST['nombreProducto'];
   $catego = $_POST['categoriaProducto'];
   $precio = $_POST['precioProducto'];
-  $decri = $_POST['DescripcionProducto'];
+  $decri = $_POST['descripcionProducto']; // El nombre del campo debe coincidir con el atributo name en el textarea del formulario
   $image = isset($_FILES["imagenProducto"]["name"]) ? basename($_FILES["imagenProducto"]["name"]) : "";
   
   // Actualizar los datos del producto en la base de datos
-  $sql = "UPDATE productos SET nombre='$nombre', categorias_idcategorias='$catego', precio='$precio', imagen='$image', descripcion='$decri' WHERE idpro='$idpro'";
-  if (move_uploaded_file($_FILES["imagenProducto"]["tmp_name"], "img/".$_FILES["imagenProducto"]["name"])) {
-    $resultado = mysqli_query($conectar, $sql);
-    if ($resultado) {
-      header("Location: producto.php?msj=Editado correctamente");
-      exit;
+  $sql = "UPDATE productos SET nombre='$nombre', categorias_idcategorias='$catego', precio='$precio', descripcion='$decri'"; // Eliminado imagen='$image' ya que se maneja por separado
+  if ($_FILES["imagenProducto"]["error"] === UPLOAD_ERR_OK) { // Verificar si se ha subido una nueva imagen
+    $target_dir = "img/";
+    $target_file = $target_dir . basename($_FILES["imagenProducto"]["name"]);
+    if (move_uploaded_file($_FILES["imagenProducto"]["tmp_name"], $target_file)) {
+      // Si se mueve correctamente, actualizar el nombre de la imagen en la base de datos
+      $sql .= ", imagen='$target_file'";
     } else {
-      echo "Error al editar";
+      echo "Error al mover el archivo de imagen.";
     }
+  }
+  $sql .= " WHERE idpro='$idpros'";
+  
+  // Ejecutar la consulta SQL
+  $resultado = mysqli_query($conectar, $sql);
+  if ($resultado) {
+    header("Location: producto.php?msj=Editado correctamente");
+    exit;
   } else {
-    $sqlImagen = "SELECT imagen FROM productos WHERE idpro = $idpro";
-    $resultadoImagen = mysqli_query($conectar, $sqlImagen);
-    $rowImagen = mysqli_fetch_assoc($resultadoImagen);
-    $image = $rowImagen['imagen'];
-    $resultado = mysqli_query($conectar, $sql);
-    if ($resultado) {
-      header("Location: producto.php?msj=Editado correctamente");
-      exit;
-    } else {
-      echo "Error al editar";
-    }
+    echo "Error al editar";
   }
 }
 ?>
+

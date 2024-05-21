@@ -29,7 +29,7 @@ if(isset($_POST['action'])){
     if($result_mesero->num_rows > 0){
         session_start();
         $_SESSION['username'] = $username;
-       header("Location:pedidos.php");
+       header("Location:carrito.php");
         exit; // Salir del script después de la redirección
     }
 
