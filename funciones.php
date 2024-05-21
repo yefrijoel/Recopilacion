@@ -19,7 +19,7 @@
     </head>
 
     <body>
-        
+
 <section class="our_menus" id="menus">
     <div class="container" style="width: auto;">
         <h2 style="text-align: center; margin-bottom: 30px">DESCUBRE NUESTROS MENÚS</h2>
@@ -177,14 +177,14 @@
         </script>
     </div>
 </section>
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#carritoModal">Ver carrito</button>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#carritoModal">Ver compras</button>
 
 <!-- Modal -->
 <div class="modal fade" id="carritoModal" tabindex="-1" aria-labelledby="carritoModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="carritoModalLabel">Carrito de Compras</h5>
+                <h5 class="modal-title" id="carritoModalLabel">Compras</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -197,7 +197,7 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-            <button type="button" class="btn btn-primary">Proceder al Pago</button>
+            <button type="button" class="btn btn-primary">Enviar Pedidos</button>
         </div>
     </div>
 </div>
