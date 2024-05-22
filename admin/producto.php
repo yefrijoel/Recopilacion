@@ -100,213 +100,206 @@
       <div class="col-lg-8">
         <div class="container mt-3">
           <h2>Tabla de Producto</h2>
-          <!-- Botón para abrir el modal -->
-       
-          <!-- El Modal -->
-            <div class="scrollbar" style="height: 500px; width: 100%; overflow-y: scroll;">
-              <div class="container">
-                <!-- Cuerpo del Modal -->
-                <div class="modal-body">
-                  <div class="table-responsive">
-                    <table class="table table-bordered table-hover">
-                      <thead class="thead-dark">
-                        <tr>
-                          <th scope="col">ID</th>
-                          <th scope="col">Nombre</th>
-                          <th scope="col">Categoría</th>
-                          <th scope="col">Precio</th>
-                          <th scope="col">Imagen</th>
-                          <th scope="col">Descripción</th>
-                          <th scope="col">Opciones</th>
-                        </tr>
-                      </thead>
-                      <tbody id="tbodytabla">
-                        <?php
-                        require('connect.php');
-                        $sql = "SELECT productos.idproductos, productos.nombre, categorias.nombre AS categoria, productos.precio, productos.imagen, productos.descripcion 
-                       FROM designdb.productos 
-                     JOIN designdb.categorias ON productos.categorias_idcategorias = categorias.idcategorias";
-                        $result = mysqli_query($conectar, $sql);
-                        while ($row = mysqli_fetch_array($result)) {
-                          echo '<tr>';
-                          echo '<th scope="row">' . $row['idproductos'] . '</th>';
-                          echo '<td>' . $row['nombre'] . '</td>';
-                          echo '<td>' . $row['categoria'] . '</td>';
-                          echo '<td>' . $row['precio'] . '</td>';
-                          echo '<td><img src="../' . $row['imagen'] . '" width="100px" height="100px" alt="' . $row['nombre'] . '"></td>';
-                          echo '<td>' . $row['descripcion'] . '</td>';
-                          echo '<td>
-                             <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalEditarProducto"
-                              data-id="' . $row['idproductos'] . '"
-                              data-nombre="' . $row['nombre'] . '"
-                              data-categoria="' . $row['categoria'] . '"
-                              data-precio="' . $row['precio'] . '"
-                              data-imagen="' . $row['imagen'] . '"
-                              data-descripcion="' . $row['descripcion'] . '"
-                              onclick="llenarModalEditarProducto(this)">Editar</button>
+          <div class="input-group mb-3">
+            <div class="input-group col-6">
+              <input type="text" class="form-control" id="inputBuscar" placeholder="Buscar producto...">
+            </div>
 
-                       <button type="button" class="btn btn-danger btn-sm" onclick="eliminarProducto(' . $row['idproductos'] . ')">Eliminar</button>
-                                </td>';
-                          echo '</tr>';
-                        }
-                        ?>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
+            <!-- El scrollbar -->
+            <div style="overflow-y: scroll; width: 100%; height: 600px;">
+              <div style="position: relative;">
+                <table class="table table-bordered table-hover">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th scope="col">ID</th>
+                      <th scope="col">Nombre</th>
+                      <th scope="col">Categoría</th>
+                      <th scope="col">Precio</th>
+                      <th scope="col">Imagen</th>
+                      <th scope="col">Descripción</th>
+                      <th scope="col">Opciones</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tbodyTabla">
+                    <?php
+                    require('connect.php');
+                    $sql = "SELECT productos.idproductos, productos.nombre, categorias.nombre AS categoria, productos.precio, productos.imagen, productos.descripcion 
+        FROM designdb.productos 
+        JOIN designdb.categorias ON productos.categorias_idcategorias = categorias.idcategorias";
+                    $result = mysqli_query($conectar, $sql);
+                    while ($row = mysqli_fetch_array($result)) {
+                      echo '<tr>';
+                      echo '<th scope="row">' . $row['idproductos'] . '</th>';
+                      echo '<td>' . $row['nombre'] . '</td>';
+                      echo '<td>' . $row['categoria'] . '</td>';
+                      echo '<td>' . $row['precio'] . '</td>';
+                      echo '<td><img src="../' . $row['imagen'] . '" width="100px" height="100px" alt="' . $row['nombre'] . '"></td>';
+                      echo '<td>' . $row['descripcion'] . '</td>';
+                      echo '<td>
+                 <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalEditarProducto"
+                  data-id="' . $row['idproductos'] . '"
+                  data-nombre="' . $row['nombre'] . '"
+                  data-categoria="' . $row['categoria'] . '"
+                  data-precio="' . $row['precio'] . '"
+                  data-imagen="' . $row['imagen'] . '"
+                  data-descripcion="' . $row['descripcion'] . '"
+                  onclick="llenarModalEditarProducto(this)">Editar</button>
+              <button type="button" class="btn btn-danger btn-sm" onclick="eliminarProducto(this, ' . $row['idproductos'] . ')">Eliminar</button>
+              </td>';
+                      echo '</tr>';
+                    }
+                    ?>
+                  </tbody>
+                </table>
               </div>
             </div>
 
-                
+            <script>
+              function eliminarProducto(event, id) {
+                if (confirm('¿Estas seguro de eliminar el producto?')) {
+                  fetch('eliminarProducto.php?id=' + id)
+                    .then(response => response.json())
+                    .then(data => {
+                      console.log(data);
+                      if (data.estado) {
+                        $(event.target).closest('tr').fadeOut();
+                      } else {
+                        alert('No se puede eliminar el producto');
+                      }
+                    })
+                    .catch(error => console.error(error));
+                }
+              }
 
-<script>
-  function eliminarProducto(event, id){
-    if(confirm('¿Estas seguro de eliminar el producto?')){
-      fetch('eliminarProducto.php?id='+id)
-      .then(response=>response.json())
-      .then(data=>{
-        console.log(data);
-        if(data.estado){
-          $(event.target).closest('tr').fadeOut();
-        }else{
-          alert('No se puede eliminar el producto');
-        }
-      })
-      .catch(error=>console.error(error));
-    }
-  }
-</script>
-                <script>
-                  var originalRows = [];
+              var originalRows = [];
 
-                  window.onload = function() {
-                    var tbody = document.getElementById('tbodyTabla');
-                    var filas = Array.from(tbody.getElementsByTagName('tr'));
-                    originalRows = filas.map(function(fila) {
-                      return fila.cloneNode(true);
-                    });
-                  };
+              window.onload = function() {
+                var tbody = document.getElementById('tbodyTabla');
+                var filas = Array.from(tbody.getElementsByTagName('tr'));
+                originalRows = filas.map(function(fila) {
+                  return fila.cloneNode(true);
+                });
+              };
 
-                  function buscarProductoEnTabla(busqueda) {
-                    var tbody = document.getElementById('tbodyTabla');
-                    tbody.innerHTML = '';
-                    if (busqueda === '') {
-                      originalRows.forEach(function(fila) {
-                        tbody.appendChild(fila);
-                      });
-                      return;
+              document.getElementById('inputBuscar').addEventListener('input', function() {
+                var busqueda = document.getElementById('inputBuscar').value;
+                buscarProductoEnTabla(busqueda);
+              });
+
+              function buscarProductoEnTabla(busqueda) {
+                var tbody = document.getElementById('tbodyTabla');
+                tbody.innerHTML = '';
+                if (busqueda === '') {
+                  originalRows.forEach(function(fila) {
+                    tbody.appendChild(fila);
+                  });
+                  return;
+                }
+                var busquedaUpper = busqueda.toUpperCase();
+                var resultado = originalRows.filter(function(fila) {
+                  var nombre = fila.getElementsByTagName('td')[1].innerText.toUpperCase();
+                  return nombre.includes(busquedaUpper);
+                });
+                resultado.forEach(function(fila) {
+                  tbody.appendChild(fila);
+                });
+              }
+            </script>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal para editar producto -->
+      <div class="modal fade" id="modalEditarProducto">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Editar producto</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="form-group">
+                  <label for="nombreProducto">Nombre</label>
+                  <input type="text" class="form-control" id="nombreProducto" name="nombreProducto" aria-describedby="nombreProducto">
+                </div>
+                <div class="form-group">
+                  <label for="categoriaProducto">Categoría</label>
+                  <select class="form-control" id="categoriaProducto" name="categoriaProducto">
+                    <option value="">Seleccione una opción</option>
+                    <?php
+                    require('connect.php');
+                    $sql = "SELECT * FROM categorias";
+                    $resultado = mysqli_query($conectar, $sql);
+                    while ($fila = mysqli_fetch_array($resultado)) {
+                      // Verificar si la categoría actual coincide con la categoría del producto
+                      $selected = ($fila['idcategorias'] == $row['categorias_idcategorias']) ? 'selected' : '';
+                      echo '<option value="' . $fila['idcategorias'] . '" ' . $selected . '>' . $fila['nombre'] . '</option>';
                     }
-                    var busquedaUpper = busqueda.toUpperCase();
-                    var resultado = originalRows.filter(function(fila) {
-                      var nombre = fila.getElementsByTagName('td')[0].innerText.toUpperCase();
-                      return nombre.includes(busquedaUpper);
-                    });
-                    resultado.forEach(function(fila) {
-                      tbody.appendChild(fila);
-                    });
-                  }
-                </script>
-            
+                    ?>
+                  </select>
 
-              </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="precioProducto">Precio</label>
+                  <input type="number" class="form-control" id="precioProducto" name="precioProducto" aria-describedby="precioProducto">
+                </div>
+                <div class="form-group">
+                  <label for="imagenProducto">Imagen</label>
+                  <input type="file" class="form-control-file" id="imagenProducto" name="imagenProducto">
+                  <img id="imagenPreview" src="" alt="Imagen del producto" width="100px" height="100px">
+                </div>
+                <div class="form-group">
+                  <label for="descripcionProducto">Descripción</label>
+                  <textarea class="form-control" id="descripcionProducto" name="DescripcionProducto" rows="3"></textarea>
+                </div>
+                <button type="submit" name="action5" class="btn btn-primary">Guardar cambios</button>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
             </div>
           </div>
         </div>
-        <!-- Modal para editar producto -->
-<div class="modal fade" id="modalEditarProducto">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Editar producto</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
-      <div class="modal-body">
-        <form action5="actualizarProducto.php" method="POST" enctype="multipart/form-data">
-          <div class="form-label-group">
-            <label for="nombreProducto">ID</label>
-            <input type="number" id="idpros" name="idpros" class="form-control">
-          </div>
-          <div class="form-group">
-            <label for="nombreProducto">Nombre</label>
-            <input type="text" class="form-control" id="nombreProducto" name="nombreProducto" aria-describedby="nombreProducto">
-          </div>
-          <div class="form-group">
-            <label for="categoriaProducto">Categoría</label>
-            <select class="form-control" id="categoriaProducto" name="categoriaProducto">
-              <option value="">Seleccione una opción</option>
-              <?php
-              require('connect.php');
-              $sql = "SELECT * FROM designdb.categorias";
-              $tabla = mysqli_query($conectar, $sql);
-              while ($fila = mysqli_fetch_array($tabla)) {
-                echo "<option value='$fila[0]'>";
-                echo $fila[1];
-                echo "</option>";
-              }
-              ?>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="precioProducto">Precio</label>
-            <input type="number" class="form-control" id="precioProducto" name="precioProducto" aria-describedby="precioProducto">
-          </div>
-          <div class="form-group">
-            <label for="imagenProducto">Imagen</label>
-            <input type="file" class="form-control-file" id="imagenProducto" name="imagenProducto">
-            <img id="imagenPreview" src="" alt="Imagen del producto" width="100px" height="100px">
-          </div>
-          <div class="form-group">
-            <label for="descripcionProducto">Descripción</label>
-            <textarea class="form-control" id="descripcionProducto" name="descripcionProducto" rows="3"></textarea>
-          </div>
-          <button type="submit" name="action5" class="btn btn-primary">Guardar cambios</button>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-      </div>
+      <script>
+        function llenarModalEditarProducto(button) {
+          var id = button.getAttribute('data-id');
+          var nombre = button.getAttribute('data-nombre');
+          var categoria = button.getAttribute('data-categoria');
+          var precio = button.getAttribute('data-precio');
+          var imagen = button.getAttribute('data-imagen');
+          var descripcion = button.getAttribute('data-descripcion');
+
+          document.getElementById('nombreProducto').value = nombre;
+          document.getElementById('categoriaProducto').value = categoria;
+          document.getElementById('precioProducto').value = precio;
+          document.getElementById('descripcionProducto').value = descripcion;
+
+          var imagenPreview = document.getElementById('imagenPreview');
+          if (imagenPreview) {
+            imagenPreview.src = '../' + imagen;
+          }
+        }
+      </script>
+
+
+
     </div>
   </div>
-</div>
 
-<script>
-  function llenarModalEditarProducto(button) {
-    var id = button.getAttribute('data-id');
-    var nombre = button.getAttribute('data-nombre');
-    var categoria = button.getAttribute('data-categoria');
-    var precio = button.getAttribute('data-precio');
-    var imagen = button.getAttribute('data-imagen');
-    var descripcion = button.getAttribute('data-descripcion');
-
-    document.getElementById('idpros').value = id;
-    document.getElementById('nombreProducto').value = nombre;
-    document.getElementById('categoriaProducto').value = categoria;
-    document.getElementById('precioProducto').value = precio;
-    document.getElementById('descripcionProducto').value = descripcion;
-
-    var imagenPreview = document.getElementById('imagenPreview');
-    if (imagenPreview) {
-      imagenPreview.src = '../' + imagen;
-    }
-  }
-</script>
+  <!-- ===== IONICONS ===== -->
+  <script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
 
 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <!-- ===== MAIN JS ===== -->
+  <script src="assets/js/main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 
-      </div>
-    </div>
-
-    <!-- ===== IONICONS ===== -->
-    <script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
-
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <!-- ===== MAIN JS ===== -->
-    <script src="assets/js/main.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
 </body>
 
 </html>
@@ -361,39 +354,38 @@ if (isset($_POST['action'])) {
 }
 ?>
 
-
 <?php
 if (isset($_POST['action5'])) {
   require('connect.php');
-  $idpros = $_POST['idpros'];
+  $idpro = $_POST['idpro'];
   $nombre = $_POST['nombreProducto'];
   $catego = $_POST['categoriaProducto'];
   $precio = $_POST['precioProducto'];
-  $decri = $_POST['descripcionProducto']; // El nombre del campo debe coincidir con el atributo name en el textarea del formulario
+  $decri = $_POST['DescripcionProducto'];
   $image = isset($_FILES["imagenProducto"]["name"]) ? basename($_FILES["imagenProducto"]["name"]) : "";
-  
+
   // Actualizar los datos del producto en la base de datos
-  $sql = "UPDATE productos SET nombre='$nombre', categorias_idcategorias='$catego', precio='$precio', descripcion='$decri'"; // Eliminado imagen='$image' ya que se maneja por separado
-  if ($_FILES["imagenProducto"]["error"] === UPLOAD_ERR_OK) { // Verificar si se ha subido una nueva imagen
-    $target_dir = "img/";
-    $target_file = $target_dir . basename($_FILES["imagenProducto"]["name"]);
-    if (move_uploaded_file($_FILES["imagenProducto"]["tmp_name"], $target_file)) {
-      // Si se mueve correctamente, actualizar el nombre de la imagen en la base de datos
-      $sql .= ", imagen='$target_file'";
+  $sql = "UPDATE productos SET nombre='$nombre', categorias_idcategorias='$catego', precio='$precio', imagen='$image', descripcion='$decri' WHERE idpro='$idpro'";
+  if (move_uploaded_file($_FILES["imagenProducto"]["tmp_name"], "img/" . $_FILES["imagenProducto"]["name"])) {
+    $resultado = mysqli_query($conectar, $sql);
+    if ($resultado) {
+      header("Location: producto.php?msj=Editado correctamente");
+      exit;
     } else {
-      echo "Error al mover el archivo de imagen.";
+      echo "Error al editar";
     }
-  }
-  $sql .= " WHERE idpro='$idpros'";
-  
-  // Ejecutar la consulta SQL
-  $resultado = mysqli_query($conectar, $sql);
-  if ($resultado) {
-    header("Location: producto.php?msj=Editado correctamente");
-    exit;
   } else {
-    echo "Error al editar";
+    $sqlImagen = "SELECT imagen FROM productos WHERE idpro = $idpro";
+    $resultadoImagen = mysqli_query($conectar, $sqlImagen);
+    $rowImagen = mysqli_fetch_assoc($resultadoImagen);
+    $image = $rowImagen['imagen'];
+    $resultado = mysqli_query($conectar, $sql);
+    if ($resultado) {
+      header("Location: producto.php?msj=Editado correctamente");
+      exit;
+    } else {
+      echo "Error al editar";
+    }
   }
 }
 ?>
-
