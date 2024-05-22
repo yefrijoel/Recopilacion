@@ -97,30 +97,14 @@
         </div>
       </div>
 
-      <div class="col-lg-6">
+      <div class="col-lg-8">
         <div class="container mt-3">
           <h2>Tabla de Producto</h2>
           <!-- Botón para abrir el modal -->
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tablaModal">
-            Abrir Tabla
-          </button>
-
+       
           <!-- El Modal -->
-          <div class="modal fade" id="tablaModal">
-            <div class="modal-dialog modal-lg">
-              <div class="modal-content">
-                <!-- Cabecera del Modal -->
-                <div class="modal-header">
-                  <h4 class="modal-title">Tabla de Productos</h4>
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-
-                <!-- Busqueda sensiva en la tabla -->
-                <div class="input-group mb-3" style="width: 300px; margin: 20px;">
-                  <span class="input-group-text" id="basic-addon1"></span>
-                  <input type="text" class="form-control" placeholder="Buscar" aria-label="Buscar" id="buscarProducto" onkeyup="buscarProductoEnTabla(this.value)" />
-                </div>
-
+            <div class="scrollbar" style="height: 500px; width: 100%; overflow-y: scroll;">
+              <div class="container">
                 <!-- Cuerpo del Modal -->
                 <div class="modal-body">
                   <div class="table-responsive">
@@ -136,7 +120,7 @@
                           <th scope="col">Opciones</th>
                         </tr>
                       </thead>
-                      <tbody id="tbodyTabla">
+                      <tbody id="tbodytabla">
                         <?php
                         require('connect.php');
                         $sql = "SELECT productos.idproductos, productos.nombre, categorias.nombre AS categoria, productos.precio, productos.imagen, productos.descripcion 
@@ -170,6 +154,9 @@
                     </table>
                   </div>
                 </div>
+              </div>
+            </div>
+
                 
 
 <script>
@@ -219,11 +206,7 @@
                     });
                   }
                 </script>
-                <!-- Pie del Modal -->
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                </div>
-
+            
 
               </div>
             </div>
