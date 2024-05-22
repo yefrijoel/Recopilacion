@@ -24,7 +24,7 @@
         <h2>Categoria de Producto</h2>
         <div class="card card-login mx-auto mt-4">
           <div class="card-body">
-            <form id="" action1="producto.php" method="post">
+            <form id="" action1="producto.php" method="post" enctype="multipart/form-data">
               <div class="form-group">
                 <div class="form-label-group">
                   <input type="number" id="" name="idcate" class="form-control" placeholder="ID" required="required">
@@ -144,7 +144,7 @@
                   data-imagen="' . $row['imagen'] . '"
                   data-descripcion="' . $row['descripcion'] . '"
                   onclick="llenarModalEditarProducto(this)">Editar</button>
-              <button type="button" class="btn btn-danger btn-sm" onclick="eliminarProducto(this, ' . $row['idproductos'] . ')">Eliminar</button>
+                  <button type="button" class="btn btn-danger btn-sm" onclick="eliminarProducto(this, ' . $row['idproductos'] . ')">Eliminar</button>
               </td>';
                       echo '</tr>';
                     }
@@ -157,17 +157,19 @@
             <script>
               function eliminarProducto(event, id) {
                 if (confirm('¿Estas seguro de eliminar el producto?')) {
-                  fetch('eliminarProducto.php?id=' + id)
+                  fetch('eliminarProducto.php?id=' + id, {
+                    method: 'post'
+                  })
                     .then(response => response.json())
                     .then(data => {
                       console.log(data);
                       if (data.estado) {
-                        $(event.target).closest('tr').fadeOut();
+                        event.target.closest('tr').remove();
                       } else {
                         alert('No se puede eliminar el producto');
                       }
                     })
-                    .catch(error => console.error(error));
+                    .catch(error => console.error('Error:', error));
                 }
               }
 
@@ -197,7 +199,7 @@
                 }
                 var busquedaUpper = busqueda.toUpperCase();
                 var resultado = originalRows.filter(function(fila) {
-                  var nombre = fila.getElementsByTagName('td')[1].innerText.toUpperCase();
+                  var nombre = fila.getElementsByTagName('td')[0].innerText.toUpperCase();
                   return nombre.includes(busquedaUpper);
                 });
                 resultado.forEach(function(fila) {
@@ -353,39 +355,48 @@ if (isset($_POST['action'])) {
   }
 }
 ?>
-
 <?php
+// Verificar si se ha enviado el formulario de edición
 if (isset($_POST['action5'])) {
-  require('connect.php');
-  $idpro = $_POST['idpro'];
-  $nombre = $_POST['nombreProducto'];
-  $catego = $_POST['categoriaProducto'];
-  $precio = $_POST['precioProducto'];
-  $decri = $_POST['DescripcionProducto'];
-  $image = isset($_FILES["imagenProducto"]["name"]) ? basename($_FILES["imagenProducto"]["name"]) : "";
+    require('connect.php'); // Requerir el archivo de conexión a la base de datos
 
-  // Actualizar los datos del producto en la base de datos
-  $sql = "UPDATE productos SET nombre='$nombre', categorias_idcategorias='$catego', precio='$precio', imagen='$image', descripcion='$decri' WHERE idpro='$idpro'";
-  if (move_uploaded_file($_FILES["imagenProducto"]["tmp_name"], "img/" . $_FILES["imagenProducto"]["name"])) {
-    $resultado = mysqli_query($conectar, $sql);
-    if ($resultado) {
-      header("Location: producto.php?msj=Editado correctamente");
-      exit;
-    } else {
-      echo "Error al editar";
+    // Obtener los datos del formulario
+    $idpro = $_POST['idpro'];
+    $nombre = $_POST['nombreProducto'];
+    $catego = $_POST['categoriaProducto'];
+    $precio = $_POST['precioProducto'];
+    $decri = $_POST['DescripcionProducto'];
+    $image = isset($_FILES["imagenProducto"]["name"]) ? basename($_FILES["imagenProducto"]["name"]) : "";
+
+    // Construir la consulta SQL para actualizar los datos del producto
+    $sql = "UPDATE productos 
+            SET nombre='$nombre', categorias_idcategorias='$catego', precio='$precio', descripcion='$decri'";
+
+    // Verificar si se cargó una nueva imagen
+    if (!empty($image)) {
+        $target_dir = "img/";
+        $target_file = $target_dir . basename($_FILES["imagenProducto"]["name"]);
+
+        // Mover la imagen cargada al directorio de imágenes
+        if (move_uploaded_file($_FILES["imagenProducto"]["tmp_name"], $target_file)) {
+            $sql .= ", imagen='$image'"; // Actualizar el nombre de la imagen en la consulta SQL
+        } else {
+            echo "Error al subir la imagen.";
+            exit; // Salir del script si hay un error al subir la imagen
+        }
     }
-  } else {
-    $sqlImagen = "SELECT imagen FROM productos WHERE idpro = $idpro";
-    $resultadoImagen = mysqli_query($conectar, $sqlImagen);
-    $rowImagen = mysqli_fetch_assoc($resultadoImagen);
-    $image = $rowImagen['imagen'];
+
+    $sql .= " WHERE idpro='$idpro'"; // Agregar la condición para actualizar el producto específico
+
+    // Ejecutar la consulta SQL
     $resultado = mysqli_query($conectar, $sql);
+
+    // Verificar si la consulta se ejecutó correctamente
     if ($resultado) {
-      header("Location: producto.php?msj=Editado correctamente");
-      exit;
+        header("Location: producto.php?msj=Editado correctamente");
+        exit;
     } else {
-      echo "Error al editar";
+        echo "Error al editar el producto.";
     }
-  }
 }
 ?>
