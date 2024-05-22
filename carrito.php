@@ -15,7 +15,8 @@
 
     <link rel="stylesheet" type="text/css" href="Design/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="Design/fonts/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="Design/css/main.css">
+    <link rel="stylesheet" type="text/css" href="Design/css/main2.css">
+    <link rel="stylesheet" type="text/css" href="Design/css/navb.css">
     <link rel="stylesheet" type="text/css" href="Design/css/responsive.css">
 
     <!-- GOOGLE FONTS -->
@@ -28,17 +29,23 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;1,100;1,200;1,300;1,400;1,500&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Prata&display=swap" rel="stylesheet">
+    <!--<script src="https://cdn.tailwindcss.com"></script> -->
 
 </head>
 
 <!-- BODY -->
 
 <body  class="our_menus" >
-    
-<div class="">
-        <section class="our_menus" id="menus">
+<nav class="navbar bg-body-tertiary position-fixed end-0">
+  <form class="container-fluid justify-content-end our_navbar">
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#carritoModal">Ver compras</button>
+  </form>
+</nav>
+
+
+        <section class="our_menus " id="menus">
             <div class="container" style="width: auto;">
-                <h2 style="text-align: center; margin-bottom: 30px">DESCUBRE NUESTROS MENÚS</h2>
+                <h1 style="text-align: center; margin-bottom: 30px">DESCUBRE NUESTROS MENÚS</h1>
                 <?php
                 require('connect.php');
                 $sql = "SELECT * FROM categorias";
@@ -79,7 +86,7 @@
                                                 <p><?php echo $producto['descripcion'] ?></p>
                                                 <span class="menu_price"><?php echo $producto['precio'] ?></span>
                                                 <br>
-                                                <input type="number" id="cantidad_<?php echo $producto['idproductos'] ?>" min="1" value="1" style="width: 60px;">
+                                                <input class="text-black" type="number" id="cantidad_<?php echo $producto['idproductos'] ?>" min="1" value="1" style="width: 60px;">
                                                 <button type="button" class="btn btn-primary" onclick="agregarAlCarrito(<?php echo $producto['idproductos'] ?>)">Añadir al carrito</button>
                                             </div>
                                         </div>
@@ -142,7 +149,7 @@
                         }
 
                         let producto = <?php echo json_encode($productos); ?>.find(p => p.idproductos == idProducto);
-
+                          
                         carrito.push({
                             producto: producto,
                             cantidad: cantidad
@@ -196,10 +203,9 @@
                 </script>
             </div>
         </section>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#carritoModal">Ver compras</button>
-
+        
         <!-- Modal -->
-        <div class="modal fade" id="carritoModal" tabindex="-1" aria-labelledby="carritoModalLabel" aria-hidden="true">
+        <div class="modal fade text-black" id="carritoModal" tabindex="-1" aria-labelledby="carritoModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -221,7 +227,6 @@
                 </div>
             </div>
         </div>
-    </div>
 
     <!-- INCLUDE JS SCRIPTS -->
     <script
